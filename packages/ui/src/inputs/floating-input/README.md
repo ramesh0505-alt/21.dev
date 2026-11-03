@@ -31,3 +31,4 @@ export function Example() {
 | `label` | `string` | — | Label rendered inside that floats on focus or content |
 | `error` | `string` | `undefined` | Error feedback message |
 | `helperText` | `string` | `undefined` | Sub-input guidance description |
+

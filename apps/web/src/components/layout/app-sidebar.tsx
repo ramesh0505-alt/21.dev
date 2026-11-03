@@ -1,187 +1,183 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
-  LayoutDashboard,
-  Component,
-  Sparkles,
-  Layers,
-  FolderHeart,
-  FolderGit2,
-  Clock,
+  Home,
+  LayoutGrid,
+  Palette,
+  LayoutTemplate,
+  AppWindow,
+  Shapes,
+  Video,
   Bookmark,
-  FlaskConical,
-  PlaySquare,
-  Settings,
+  Sparkles,
+  Bot,
+  Terminal,
+  Plus,
   ChevronRight,
-  Code2,
-  Package,
-  Compass,
+  Search,
+  Command,
 } from 'lucide-react';
-import { getFavorites, getRecentlyViewed, getCollections } from '@/lib/storage';
-import { ALL_CATEGORIES, CATEGORIES_BY_SECTION } from '@/lib/categories';
-import { registry } from '@/registry';
+import { getFavorites } from '@/lib/storage';
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  onOpenSearch?: () => void;
+}
+
+export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
   const pathname = usePathname();
-  const [favoriteCount, setFavoriteCount] = useState(0);
-  const [recentCount, setRecentCount] = useState(0);
-  const [collectionCount, setCollectionCount] = useState(0);
-  const [elementsOpen, setElementsOpen] = useState(true);
+  const [favoriteCount, setFavoriteCount] = React.useState(0);
 
-  const updateCounts = () => {
+  React.useEffect(() => {
     setFavoriteCount(getFavorites().length);
-    setRecentCount(getRecentlyViewed().length);
-    setCollectionCount(getCollections().length);
-  };
-
-  useEffect(() => {
-    updateCounts();
-    window.addEventListener('devui_storage_updated', updateCounts);
-    return () => window.removeEventListener('devui_storage_updated', updateCounts);
+    const update = () => setFavoriteCount(getFavorites().length);
+    window.addEventListener('devui_storage_updated', update);
+    return () => window.removeEventListener('devui_storage_updated', update);
   }, []);
 
-  // Compute component count per category from registry
-  const countsByCategory = React.useMemo(() => {
-    const map = new Map<string, number>();
-    for (const item of registry) {
-      map.set(item.category.toLowerCase(), (map.get(item.category.toLowerCase()) || 0) + 1);
-    }
-    return map;
-  }, []);
+  const exploreItems = [
+    { label: 'Components', href: '/elements', icon: LayoutGrid, hasChevron: true },
+    { label: 'Themes', href: '/references', icon: Palette, hasChevron: true },
+    { label: 'Templates', href: '/templates', icon: LayoutTemplate, hasChevron: true },
+    { label: 'Apps', href: '/product-kits', icon: AppWindow, badge: 'New', hasChevron: true },
+    { label: 'Animations', href: '/animations', icon: Shapes, badge: 'New', hasChevron: true },
+    { label: 'Sections', href: '/sections', icon: Video, badge: 'New', hasChevron: true },
+    { label: 'Bookmarks', href: '/favorites', icon: Bookmark, count: favoriteCount },
+  ];
 
-  const navGroups = [
-    {
-      title: 'Discovery',
-      items: [
-        { label: 'Dashboard', href: '/', icon: LayoutDashboard },
-        { label: 'All Elements', href: '/elements', icon: Component, count: registry.length },
-        { label: 'Animations', href: '/animations', icon: Sparkles },
-        { label: 'Sections', href: '/sections', icon: Layers },
-        { label: 'Templates', href: '/templates', icon: Package },
-        { label: 'Product Kits', href: '/product-kits', icon: Compass },
-      ],
-    },
-    {
-      title: 'Workspace',
-      items: [
-        { label: 'Favorites', href: '/favorites', icon: FolderHeart, count: favoriteCount },
-        { label: 'Collections', href: '/collections', icon: FolderGit2, count: collectionCount },
-        { label: 'Recent', href: '/recent', icon: Clock, count: recentCount },
-        { label: 'References', href: '/references', icon: Bookmark },
-        { label: 'Experiments', href: '/experiments', icon: FlaskConical },
-        { label: 'Playground', href: '/playground', icon: PlaySquare },
-      ],
-    },
+  const buildItems = [
+    { label: 'Creator Studio', href: '/playground', icon: Sparkles, hasChevron: true },
+    { label: '21st AI', href: '/experiments', icon: Sparkles },
+    { label: 'Design Bug Bot', href: '/playground', icon: Bot, badge: 'Try free' },
+    { label: 'CLI & MCP', href: '/settings', icon: Terminal },
   ];
 
   return (
-    <aside className="w-64 shrink-0 border-r border-border/80 bg-background/50 flex flex-col h-[calc(100vh-3.5rem)] sticky top-14 select-none">
-      <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
-        {navGroups.map((group) => (
-          <div key={group.title} className="space-y-1">
-            <h3 className="px-3 text-[11px] font-mono uppercase tracking-wider text-muted-foreground/80 font-medium">
-              {group.title}
-            </h3>
-            <div className="space-y-0.5 pt-1">
-              {group.items.map((item) => {
-                const isActive = pathname === item.href;
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-                      isActive
-                        ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                        : 'text-muted-foreground hover:bg-muted/40 hover:text-foreground'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2.5">
-                      <Icon className={`h-4 w-4 ${isActive ? 'text-emerald-400' : 'text-muted-foreground'}`} />
-                      <span>{item.label}</span>
-                    </div>
+    <aside className="w-56 shrink-0 border-r border-neutral-900 bg-neutral-950 flex flex-col h-[calc(100vh-3.5rem)] sticky top-14 select-none text-xs">
+      {/* Search Button inside Sidebar */}
+      <div className="p-3 pb-2">
+        <button
+          onClick={onOpenSearch}
+          className="flex w-full items-center justify-between rounded-xl border border-neutral-800/80 bg-neutral-900/60 px-3 py-2 text-neutral-400 hover:border-neutral-700 hover:text-white transition-colors cursor-pointer"
+        >
+          <div className="flex items-center gap-2">
+            <Search className="h-3.5 w-3.5 text-neutral-400" />
+            <span className="text-xs">Search</span>
+          </div>
+          <kbd className="inline-flex items-center gap-0.5 rounded bg-neutral-800 px-1.5 py-0.5 text-[10px] font-mono text-neutral-400">
+            ⌘K
+          </kbd>
+        </button>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-2 space-y-5 scrollbar-none">
+        {/* Home Item */}
+        <div className="pt-1">
+          <Link
+            href="/"
+            className={`flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
+          >
+            <Home className="h-4 w-4" />
+            <span>Home</span>
+          </Link>
+        </div>
+
+        {/* Section: Explore */}
+        <div className="space-y-1">
+          <div className="px-3 text-[11px] font-semibold text-neutral-500">Explore</div>
+          <div className="space-y-0.5 pt-0.5">
+            {exploreItems.map((item) => {
+              const isActive = pathname === item.href;
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center justify-between rounded-xl px-3 py-1.5 font-medium transition-colors ${
+                    isActive
+                      ? 'bg-neutral-900 text-white font-semibold'
+                      : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Icon className="h-4 w-4 text-neutral-400" />
+                    <span>{item.label}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    {item.badge && (
+                      <span className="rounded bg-blue-600/20 text-blue-400 px-1.5 py-0.2 text-[9px] font-bold">
+                        {item.badge}
+                      </span>
+                    )}
                     {item.count !== undefined && item.count > 0 && (
-                      <span
-                        className={`rounded-full px-1.5 py-0.2 text-[10px] font-mono ${
-                          isActive
-                            ? 'bg-emerald-500/20 text-emerald-300 font-semibold'
-                            : 'bg-muted text-muted-foreground'
-                        }`}
-                      >
+                      <span className="rounded-full bg-neutral-800 px-1.5 text-[10px] font-mono text-neutral-400">
                         {item.count}
                       </span>
                     )}
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-
-        {/* Categories Section Browser */}
-        <div className="space-y-1 pt-2">
-          <button
-            onClick={() => setElementsOpen(!elementsOpen)}
-            className="flex w-full items-center justify-between px-3 text-[11px] font-mono uppercase tracking-wider text-muted-foreground/80 hover:text-foreground font-medium cursor-pointer"
-          >
-            <span>Core Categories</span>
-            <ChevronRight
-              className={`h-3.5 w-3.5 transition-transform duration-200 ${
-                elementsOpen ? 'rotate-90' : ''
-              }`}
-            />
-          </button>
-
-          {elementsOpen && (
-            <div className="space-y-0.5 pt-1 pl-2">
-              {ALL_CATEGORIES.slice(0, 14).map((cat) => {
-                const count = countsByCategory.get(cat.name.toLowerCase()) || 0;
-                const catHref = `/elements/${cat.slug}`;
-                const isActive = pathname === catHref;
-                return (
-                  <Link
-                    key={cat.slug}
-                    href={catHref}
-                    className={`flex items-center justify-between rounded-md px-2.5 py-1 text-xs transition-colors ${
-                      isActive
-                        ? 'bg-emerald-500/10 text-emerald-400 font-medium'
-                        : 'text-muted-foreground hover:bg-muted/30 hover:text-foreground'
-                    }`}
-                  >
-                    <span className="truncate">{cat.name}</span>
-                    {count > 0 ? (
-                      <span className="font-mono text-[10px] text-emerald-400 font-semibold">
-                        {count}
-                      </span>
-                    ) : (
-                      <span className="font-mono text-[9px] text-muted-foreground/40">0</span>
+                    {item.hasChevron && (
+                      <ChevronRight className="h-3 w-3 text-neutral-600" />
                     )}
-                  </Link>
-                );
-              })}
-            </div>
-          )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Section: Build */}
+        <div className="space-y-1">
+          <div className="px-3 text-[11px] font-semibold text-neutral-500">Build</div>
+          <div className="space-y-0.5 pt-0.5">
+            {buildItems.map((item) => {
+              const isActive = pathname === item.href;
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className={`flex items-center justify-between rounded-xl px-3 py-1.5 font-medium transition-colors ${
+                    isActive
+                      ? 'bg-neutral-900 text-white font-semibold'
+                      : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+                  }`}
+                >
+                  <div className="flex items-center gap-2.5">
+                    <Icon className="h-4 w-4 text-neutral-400" />
+                    <span>{item.label}</span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    {item.badge && (
+                      <span className="rounded bg-neutral-800 text-neutral-300 px-1.5 py-0.2 text-[9px] font-semibold">
+                        {item.badge}
+                      </span>
+                    )}
+                    {item.hasChevron && (
+                      <ChevronRight className="h-3 w-3 text-neutral-600" />
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
 
-      {/* Bottom status & settings */}
-      <div className="border-t border-border/80 p-3 bg-muted/10">
+      {/* Bottom Publish Pill */}
+      <div className="p-3 border-t border-neutral-900">
         <Link
-          href="/settings"
-          className={`flex items-center justify-between rounded-lg px-3 py-1.5 text-xs font-medium transition-colors ${
-            pathname === '/settings'
-              ? 'bg-emerald-500/10 text-emerald-400'
-              : 'text-muted-foreground hover:bg-muted/40 hover:text-foreground'
-          }`}
+          href="/playground"
+          className="flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-900/80 px-3 py-2 text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors"
         >
-          <div className="flex items-center gap-2">
-            <Settings className="h-4 w-4" />
-            <span>Library Settings</span>
-          </div>
-          <span className="text-[10px] font-mono text-muted-foreground">v1.0</span>
+          <Plus className="h-3.5 w-3.5 text-neutral-400" />
+          <span className="font-semibold text-xs">Publish Component</span>
         </Link>
       </div>
     </aside>

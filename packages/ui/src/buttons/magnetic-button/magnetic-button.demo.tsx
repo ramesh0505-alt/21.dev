@@ -26,3 +26,4 @@ export function MagneticButtonDemo() {
 }
 
 export default MagneticButtonDemo;
+

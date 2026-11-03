@@ -169,3 +169,4 @@ export function getAllCategories(): { category: string; section: string; count: 
 }
 
 main();
+

@@ -1,0 +1,23 @@
+{
+  "id": "med-polaroid-gallery",
+  "name": "Hanging Polaroid Gallery",
+  "slug": "polaroid-gallery",
+  "category": "Image galleries",
+  "section": "media",
+  "description": "Nostalgic hanging Polaroid photo gallery suspended with wooden clips and responsive spring swing physics.",
+  "tags": ["media", "gallery", "polaroid", "photos", "hanging", "spring", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "PolaroidGalleryDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/media/polaroid-gallery/polaroid-gallery.tsx",
+    "demo": "packages/ui/src/media/polaroid-gallery/polaroid-gallery.demo.tsx",
+    "meta": "packages/ui/src/media/polaroid-gallery/meta.json",
+    "readme": "packages/ui/src/media/polaroid-gallery/README.md"
+  },
+  "createdAt": "2026-11-03T15:18:00.000Z",
+  "updatedAt": "2026-11-03T15:18:00.000Z"
+}

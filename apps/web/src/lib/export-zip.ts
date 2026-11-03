@@ -97,3 +97,4 @@ export default function Example() {
   const blob = await zip.generateAsync({ type: 'blob' });
   saveAs(blob, `${component.slug}.zip`);
 }
+

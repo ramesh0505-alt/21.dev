@@ -71,3 +71,4 @@ describe('Local Storage & Favorites Management', () => {
     toggleFavorite(testSlug);
   });
 });
+

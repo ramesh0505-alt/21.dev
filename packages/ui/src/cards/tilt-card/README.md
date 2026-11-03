@@ -30,3 +30,4 @@ export function Example() {
 | `maxTilt` | `number` | `12` | Maximum degrees of rotation along X/Y axes |
 | `perspective` | `number` | `1000` | 3D perspective depth in pixels |
 | `glare` | `boolean` | `true` | Shows cursor-following radial light reflection |
+

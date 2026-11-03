@@ -20,3 +20,4 @@ export function TabsSliderDemo() {
 }
 
 export default TabsSliderDemo;
+

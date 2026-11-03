@@ -93,3 +93,4 @@ export const ALL_CATEGORIES: CategoryInfo[] = Object.values(CATEGORIES_BY_SECTIO
 export function getCategoryBySlug(slug: string): CategoryInfo | undefined {
   return ALL_CATEGORIES.find((c) => c.slug.toLowerCase() === slug.toLowerCase());
 }
+

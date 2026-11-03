@@ -17,3 +17,4 @@ export function Example() {
   return <TextShimmer>Next Generation Developer Platform</TextShimmer>;
 }
 ```
+

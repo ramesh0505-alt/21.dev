@@ -80,3 +80,4 @@ export default function CategoryPage({ params }: { params: Promise<{ category: s
     </div>
   );
 }
+

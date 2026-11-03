@@ -1,0 +1,23 @@
+{
+  "id": "med-clothing-rail",
+  "name": "Product Rail Gallery",
+  "slug": "clothing-rail",
+  "category": "Product galleries",
+  "section": "media",
+  "description": "Interactive horizontal wardrobe rail featuring physical clothes hangers, price tag pills, hover spring lift physics, and quick cart actions.",
+  "tags": ["media", "ecommerce", "clothing", "gallery", "rail", "hangers", "interactive", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "ClothingRailDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/media/clothing-rail/clothing-rail.tsx",
+    "demo": "packages/ui/src/media/clothing-rail/clothing-rail.demo.tsx",
+    "meta": "packages/ui/src/media/clothing-rail/meta.json",
+    "readme": "packages/ui/src/media/clothing-rail/README.md"
+  },
+  "createdAt": "2026-11-03T15:15:00.000Z",
+  "updatedAt": "2026-11-03T15:15:00.000Z"
+}

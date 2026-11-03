@@ -66,3 +66,4 @@ export const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputPro
 );
 
 FloatingInput.displayName = 'FloatingInput';
+

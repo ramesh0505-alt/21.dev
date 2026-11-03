@@ -31,3 +31,4 @@ export function Example() {
 | `magneticStrength` | `number` | `0.35` | Multiplier for cursor pull distance (0.1 to 0.6) |
 | `variant` | `'emerald' \| 'outline' \| 'slate'` | `'emerald'` | Button color scheme |
 | `children` | `React.ReactNode` | — | Button label and icons |
+

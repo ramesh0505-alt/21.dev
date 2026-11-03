@@ -75,3 +75,4 @@ export function TabsSlider({ tabs, defaultTab, onChange, className }: TabsSlider
     </div>
   );
 }
+

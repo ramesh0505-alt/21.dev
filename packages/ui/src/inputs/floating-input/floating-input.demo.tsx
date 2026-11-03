@@ -35,3 +35,4 @@ export function FloatingInputDemo() {
 }
 
 export default FloatingInputDemo;
+

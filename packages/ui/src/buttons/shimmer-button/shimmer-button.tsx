@@ -70,3 +70,4 @@ export const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonPr
 );
 
 ShimmerButton.displayName = 'ShimmerButton';
+

@@ -23,3 +23,4 @@ export function Example() {
   return <FloatingDock items={items} />;
 }
 ```
+

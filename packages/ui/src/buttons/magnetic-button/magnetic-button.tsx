@@ -79,3 +79,4 @@ export const MagneticButton = React.forwardRef<HTMLButtonElement, MagneticButton
 );
 
 MagneticButton.displayName = 'MagneticButton';
+

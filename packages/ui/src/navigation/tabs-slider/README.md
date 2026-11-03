@@ -21,3 +21,4 @@ export function Example() {
   return <TabsSlider tabs={tabs} defaultTab="1" />;
 }
 ```
+

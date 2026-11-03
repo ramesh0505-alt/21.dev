@@ -32,3 +32,4 @@ export function Example() {
 | `shimmerDuration` | `string` | `'2.5s'` | Cycle rotation period duration |
 | `borderRadius` | `string` | `'100px'` | CSS border radius |
 | `background` | `string` | `'rgba(11, 15, 25, 1)'` | Interior container color |
+

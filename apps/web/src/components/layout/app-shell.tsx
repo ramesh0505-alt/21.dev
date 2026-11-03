@@ -9,11 +9,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const [searchOpen, setSearchOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className="min-h-screen flex flex-col bg-neutral-950 text-neutral-100 font-sans">
       <AppHeader onOpenSearch={() => setSearchOpen(true)} />
       <div className="flex flex-1">
-        <AppSidebar />
-        <main className="flex-1 overflow-x-hidden p-6 md:p-8">
+        <AppSidebar onOpenSearch={() => setSearchOpen(true)} />
+        <main className="flex-1 overflow-x-hidden p-6 md:p-10 bg-neutral-950">
           {children}
         </main>
       </div>

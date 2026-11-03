@@ -9,7 +9,9 @@ import { BentoGridDemo } from '@ui-library/ui';
 import { FloatingDockDemo } from '@ui-library/ui';
 import { FloatingInputDemo } from '@ui-library/ui';
 import { HeroGeometricDemo } from '@ui-library/ui';
+import { PolaroidGalleryDemo } from '@ui-library/ui';
 import { MagneticButtonDemo } from '@ui-library/ui';
+import { ClothingRailDemo } from '@ui-library/ui';
 import { ShimmerButtonDemo } from '@ui-library/ui';
 import { SpotlightCardDemo } from '@ui-library/ui';
 import { StatsCardDemo } from '@ui-library/ui';
@@ -27,7 +29,9 @@ export const componentDemos: Record<string, React.ComponentType<any>> = {
   'floating-dock': FloatingDockDemo,
   'floating-input': FloatingInputDemo,
   'hero-geometric': HeroGeometricDemo,
+  'polaroid-gallery': PolaroidGalleryDemo,
   'magnetic-button': MagneticButtonDemo,
+  'clothing-rail': ClothingRailDemo,
   'shimmer-button': ShimmerButtonDemo,
   'spotlight-card': SpotlightCardDemo,
   'stats-card': StatsCardDemo,

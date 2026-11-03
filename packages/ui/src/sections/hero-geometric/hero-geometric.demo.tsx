@@ -20,3 +20,4 @@ export function HeroGeometricDemo() {
 }
 
 export default HeroGeometricDemo;
+

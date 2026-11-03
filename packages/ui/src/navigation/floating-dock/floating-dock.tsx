@@ -75,3 +75,4 @@ export function FloatingDock({ items, className }: FloatingDockProps) {
     </div>
   );
 }
+

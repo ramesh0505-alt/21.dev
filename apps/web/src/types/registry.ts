@@ -50,3 +50,4 @@ export interface CategoryDefinition {
   description: string;
   count?: number;
 }
+

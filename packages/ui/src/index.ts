@@ -27,3 +27,7 @@ export * from './data-display/stats-card';
 
 // Sections
 export * from './sections/hero-geometric';
+
+// Media
+export * from './media/clothing-rail';
+export * from './media/polaroid-gallery';
