@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { RotateCw, Sparkles, Utensils } from 'lucide-react';
+import { RotateCw } from 'lucide-react';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -26,6 +26,16 @@ const DEFAULT_PLATES: SushiPlate[] = [
   { id: '4', name: 'Yellowtail Nigiri', jpName: 'ハマチ', price: '$8.00', dishType: 'nigiri', color: '#fed7aa' },
   { id: '5', name: 'Avocado Roll', jpName: 'アボカド', price: '$6.50', dishType: 'maki', color: '#84cc16' },
   { id: '6', name: 'Fresh Wasabi & Ginger', jpName: '生姜', price: '$3.00', dishType: 'wasabi', color: '#22c55e' },
+];
+
+// Pre-computed integer coordinates for the 6 oval turntable positions (prevents SSR/client float mismatch)
+const PLATE_POSITIONS = [
+  { x: 135, y: 0 },
+  { x: 68, y: 54 },
+  { x: -68, y: 54 },
+  { x: -135, y: 0 },
+  { x: -68, y: -54 },
+  { x: 68, y: -54 },
 ];
 
 export function SushiBar({
@@ -83,19 +93,14 @@ export function SushiBar({
               transition={{ type: 'spring', stiffness: 80, damping: 15 }}
             >
               {DEFAULT_PLATES.map((plate, index) => {
-                const angle = (index * (360 / DEFAULT_PLATES.length) * Math.PI) / 180;
-                // Oval parametric coordinates
-                const radiusX = 135;
-                const radiusY = 62;
-                const x = Math.cos(angle) * radiusX;
-                const y = Math.sin(angle) * radiusY;
+                const pos = PLATE_POSITIONS[index] || { x: 0, y: 0 };
 
                 return (
                   <motion.div
                     key={plate.id}
                     onClick={() => setSelectedPlate(plate)}
                     className="absolute top-1/2 left-1/2 -ml-5 -mt-5 h-10 w-10 rounded-full bg-stone-100 border-2 border-stone-300 shadow-lg flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
-                    style={{ transform: `translate(${x}px, ${y}px)` }}
+                    style={{ transform: `translate(${pos.x}px, ${pos.y}px)` }}
                   >
                     <div
                       className="h-5 w-6 rounded-sm shadow-sm flex items-center justify-center text-[7px] font-bold text-white"

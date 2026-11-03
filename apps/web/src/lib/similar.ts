@@ -45,3 +45,4 @@ export function getSimilarComponents(slug: string, limit = 4): ComponentMeta[] {
 
   return scored.slice(0, limit).map((s) => s.comp);
 }
+

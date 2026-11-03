@@ -7,3 +7,4 @@ An interactive oval revolving turntable with authentic Japanese dishes, spring r
 ```bash
 pnpm add motion clsx tailwind-merge lucide-react
 ```
+

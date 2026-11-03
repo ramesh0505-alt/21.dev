@@ -390,3 +390,4 @@ export default function RemixPage({ params }: { params: Promise<{ slug: string }
     </div>
   );
 }
+
