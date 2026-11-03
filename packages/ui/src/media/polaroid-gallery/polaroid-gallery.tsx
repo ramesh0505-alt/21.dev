@@ -105,3 +105,4 @@ export function PolaroidGallery({ photos = DEFAULT_PHOTOS, className }: { photos
     </div>
   );
 }
+

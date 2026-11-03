@@ -2,24 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import {
   X,
-  Maximize2,
-  Copy,
-  Check,
-  Bookmark,
-  Share2,
-  Sparkles,
-  ChevronDown,
-  Terminal,
   ExternalLink,
-  Download,
   RotateCcw,
+  Maximize2,
+  ChevronRight,
+  ChevronLeft,
+  Bookmark,
 } from 'lucide-react';
 import { ComponentMeta } from '@/types/registry';
-import { componentDemos } from '@/registry';
-import { isFavorite, toggleFavorite, getInstallCommand, getPackageManagerPreference } from '@/lib/storage';
-import { downloadComponentZip } from '@/lib/export-zip';
+import { componentDemos, registry } from '@/registry';
+import { ActionBar } from './action-bar';
+import { isFavorite, toggleFavorite } from '@/lib/storage';
 
 interface ComponentModalProps {
   component: ComponentMeta | null;
@@ -27,91 +23,94 @@ interface ComponentModalProps {
 }
 
 export function ComponentModal({ component, onClose }: ComponentModalProps) {
-  const [copiedCode, setCopiedCode] = useState(false);
-  const [copiedCli, setCopiedCli] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const router = useRouter();
   const [remountKey, setRemountKey] = useState(0);
+  const [saved, setSaved] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     if (component) {
       setSaved(isFavorite(component.slug));
+      const idx = registry.findIndex((c) => c.slug === component.slug);
+      if (idx !== -1) setCurrentIndex(idx);
     }
   }, [component]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight' && component) handleNext();
+      if (e.key === 'ArrowLeft' && component) handlePrev();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [component, currentIndex, onClose]);
 
   if (!component) return null;
 
-  const DemoComponent = componentDemos[component.slug];
+  const currentComp = registry[currentIndex] || component;
+  const DemoComponent = componentDemos[currentComp.slug];
 
-  const handleCopyCode = () => {
-    if (component.code?.component) {
-      navigator.clipboard.writeText(component.code.component);
-      setCopiedCode(true);
-      setTimeout(() => setCopiedCode(false), 2000);
-    }
+  const handleNext = () => {
+    const nextIdx = (currentIndex + 1) % registry.length;
+    setCurrentIndex(nextIdx);
   };
 
-  const handleToggleSave = () => {
-    const next = toggleFavorite(component.slug);
-    setSaved(next);
-  };
-
-  const handleDownloadZip = () => {
-    downloadComponentZip(component);
+  const handlePrev = () => {
+    const prevIdx = (currentIndex - 1 + registry.length) % registry.length;
+    setCurrentIndex(prevIdx);
   };
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/90 backdrop-blur-md animate-in fade-in duration-150 select-none"
       onClick={onClose}
     >
       <div
-        className="relative flex flex-col w-full max-w-5xl max-h-[92vh] overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950 text-white shadow-2xl"
+        className="relative flex flex-col w-full max-w-6xl h-[92vh] overflow-hidden rounded-2xl border border-neutral-800 bg-[#09090b] text-white shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Header Bar */}
-        <div className="flex items-center justify-between border-b border-neutral-800/80 bg-neutral-950 px-5 py-3.5">
+        {/* Top Header Bar matching Screenshot 2 */}
+        <div className="flex items-center justify-between border-b border-neutral-800/80 bg-[#09090b] px-5 py-3 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="h-6 w-6 rounded-full bg-gradient-to-tr from-purple-500 via-rose-500 to-amber-500 p-0.5 flex items-center justify-center">
-              <div className="h-full w-full rounded-full bg-neutral-950 flex items-center justify-center text-[10px] font-bold text-white">
+            {/* Glowing gradient rainbow circular logo badge */}
+            <div className="h-6 w-6 rounded-full bg-gradient-to-tr from-pink-500 via-rose-500 to-amber-500 p-0.5 flex items-center justify-center shadow-md shadow-rose-500/20">
+              <div className="h-full w-full rounded-full bg-[#09090b] flex items-center justify-center text-[9px] font-black text-white">
                 21
               </div>
             </div>
+
             <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-semibold text-sm text-neutral-100">{component.name}</h3>
-                <span className="rounded-full bg-neutral-800 px-2 py-0.2 text-[10px] text-neutral-400 font-mono">
-                  {component.category}
-                </span>
-              </div>
+              <h3 className="font-semibold text-sm text-neutral-100 truncate max-w-xs sm:max-w-lg">
+                {currentComp.name}
+              </h3>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          {/* Right Header Controls matching Screenshot 2 */}
+          <div className="flex items-center gap-2 text-xs">
             <Link
-              href={`/components/${component.slug}`}
-              className="text-neutral-400 hover:text-white p-1.5 rounded-lg hover:bg-neutral-850"
+              href={`/components/${currentComp.slug}`}
+              className="text-neutral-400 hover:text-white p-1.5 rounded-lg hover:bg-neutral-900 transition-colors"
               title="Open full page"
             >
               <ExternalLink className="h-4 w-4" />
             </Link>
+
             <button
-              onClick={() => setRemountKey((k) => k + 1)}
-              className="text-neutral-400 hover:text-white p-1.5 rounded-lg hover:bg-neutral-850"
-              title="Reset state"
+              onClick={() => {
+                const next = toggleFavorite(currentComp.slug);
+                setSaved(next);
+              }}
+              className="text-neutral-400 hover:text-white p-1.5 rounded-lg hover:bg-neutral-900 transition-colors"
+              title="Bookmark"
             >
-              <RotateCcw className="h-4 w-4" />
+              <Bookmark className={`h-4 w-4 ${saved ? 'fill-purple-400 text-purple-400' : ''}`} />
             </button>
+
             <button
               onClick={onClose}
-              className="text-neutral-400 hover:text-white p-1.5 rounded-lg hover:bg-neutral-850"
+              className="text-neutral-400 hover:text-white p-1.5 rounded-lg hover:bg-neutral-900 transition-colors"
               title="Close modal (Esc)"
             >
               <X className="h-4 w-4" />
@@ -119,62 +118,51 @@ export function ComponentModal({ component, onClose }: ComponentModalProps) {
           </div>
         </div>
 
-        {/* Center Canvas Stage */}
-        <div className="relative flex-1 overflow-auto bg-neutral-950 p-6 md:p-10 flex items-center justify-center min-h-[380px]">
-          <div key={remountKey} className="w-full flex items-center justify-center">
+        {/* Center Canvas Stage matching Screenshot 2 */}
+        <div className="relative flex-1 overflow-auto bg-[#09090b] p-4 sm:p-8 flex items-center justify-center">
+          {/* Left Arrow Navigation */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-3 z-30 p-2 rounded-full bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors"
+            title="Previous component"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </button>
+
+          {/* Component Demo Stage */}
+          <div key={remountKey} className="w-full max-w-4xl flex items-center justify-center">
             {DemoComponent ? (
-              <DemoComponent />
+              <div className="w-full flex items-center justify-center">
+                <DemoComponent />
+              </div>
             ) : (
-              <div className="text-neutral-500 text-sm font-mono">No demo component registered</div>
+              <div className="text-neutral-500 text-xs font-mono">Live Demo Active</div>
             )}
           </div>
+
+          {/* Right Arrow Navigation Chevron matching Screenshot 2 */}
+          <button
+            onClick={handleNext}
+            className="absolute right-3 z-30 p-2 rounded-full bg-neutral-900/80 border border-neutral-800 text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors"
+            title="Next component"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </button>
         </div>
 
-        {/* Bottom Action Dock Bar */}
-        <div className="flex flex-wrap items-center justify-between border-t border-neutral-800/80 bg-neutral-950 px-6 py-3.5 gap-3">
-          {/* Left Buttons: Remix & Save */}
-          <div className="flex items-center gap-2">
-            <Link
-              href="/playground"
-              className="inline-flex items-center gap-1.5 rounded-xl border border-neutral-800 bg-neutral-900 px-3.5 py-2 text-xs font-medium text-neutral-300 hover:border-neutral-700 hover:text-white transition-colors"
-            >
-              <Sparkles className="h-3.5 w-3.5 text-neutral-400" />
-              <span>Remix</span>
-            </Link>
-
-            <button
-              onClick={handleToggleSave}
-              className={`inline-flex items-center gap-1.5 rounded-xl border px-3.5 py-2 text-xs font-medium transition-colors cursor-pointer ${
-                saved
-                  ? 'border-purple-500/40 bg-purple-500/10 text-purple-300'
-                  : 'border-neutral-800 bg-neutral-900 text-neutral-300 hover:border-neutral-700 hover:text-white'
-              }`}
-            >
-              <Bookmark className={`h-3.5 w-3.5 ${saved ? 'fill-purple-400' : ''}`} />
-              <span>{saved ? 'Saved' : 'Save'}</span>
-            </button>
-
-            <button
-              onClick={handleDownloadZip}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors"
-              title="Download standalone ZIP"
-            >
-              <Download className="h-3.5 w-3.5 text-emerald-400" />
-              <span>ZIP</span>
-            </button>
-          </div>
-
-          {/* Right Action: Copy code */}
-          <div className="flex items-center gap-2">
-            <button
-              onClick={handleCopyCode}
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 active:scale-95 px-5 py-2 text-xs font-semibold text-white shadow-lg shadow-blue-600/30 transition-all cursor-pointer"
-            >
-              {copiedCode ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-              <span>{copiedCode ? 'Copied code!' : 'Copy code'}</span>
-              <ChevronDown className="h-3.5 w-3.5 opacity-70 ml-1 border-l border-blue-400/30 pl-1" />
-            </button>
-          </div>
+        {/* Fixed Bottom Action Bar matching Screenshot 2 */}
+        <div className="shrink-0 p-3 bg-[#09090b] border-t border-neutral-900/90 flex justify-center">
+          <ActionBar
+            component={currentComp}
+            onOpenRemix={() => {
+              onClose();
+              router.push(`/remix/${currentComp.slug}`);
+            }}
+            onSelectSimilar={(sim) => {
+              const idx = registry.findIndex((c) => c.slug === sim.slug);
+              if (idx !== -1) setCurrentIndex(idx);
+            }}
+          />
         </div>
       </div>
     </div>

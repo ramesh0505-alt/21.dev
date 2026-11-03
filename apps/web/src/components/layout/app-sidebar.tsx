@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -9,18 +9,18 @@ import {
   Palette,
   LayoutTemplate,
   AppWindow,
-  Shapes,
+  Sparkles,
   Video,
   Bookmark,
-  Sparkles,
-  Bot,
   Terminal,
-  Plus,
+  Bot,
+  PlusCircle,
   ChevronRight,
+  ChevronDown,
   Search,
-  Command,
+  Layers,
 } from 'lucide-react';
-import { getFavorites } from '@/lib/storage';
+import { registry } from '@/registry';
 
 interface AppSidebarProps {
   onOpenSearch?: () => void;
@@ -28,53 +28,58 @@ interface AppSidebarProps {
 
 export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
   const pathname = usePathname();
-  const [favoriteCount, setFavoriteCount] = React.useState(0);
+  const [componentsExpanded, setComponentsExpanded] = useState(false);
 
-  React.useEffect(() => {
-    setFavoriteCount(getFavorites().length);
-    const update = () => setFavoriteCount(getFavorites().length);
-    window.addEventListener('devui_storage_updated', update);
-    return () => window.removeEventListener('devui_storage_updated', update);
-  }, []);
-
-  const exploreItems = [
-    { label: 'Components', href: '/elements', icon: LayoutGrid, hasChevron: true },
-    { label: 'Themes', href: '/references', icon: Palette, hasChevron: true },
-    { label: 'Templates', href: '/templates', icon: LayoutTemplate, hasChevron: true },
-    { label: 'Apps', href: '/product-kits', icon: AppWindow, badge: 'New', hasChevron: true },
-    { label: 'Animations', href: '/animations', icon: Shapes, badge: 'New', hasChevron: true },
-    { label: 'Sections', href: '/sections', icon: Video, badge: 'New', hasChevron: true },
-    { label: 'Bookmarks', href: '/favorites', icon: Bookmark, count: favoriteCount },
-  ];
-
-  const buildItems = [
-    { label: 'Creator Studio', href: '/playground', icon: Sparkles, hasChevron: true },
-    { label: '21st AI', href: '/experiments', icon: Sparkles },
-    { label: 'Design Bug Bot', href: '/playground', icon: Bot, badge: 'Try free' },
-    { label: 'CLI & MCP', href: '/settings', icon: Terminal },
+  const categories = [
+    { name: 'Buttons', slug: 'buttons' },
+    { name: 'Cards', slug: 'cards' },
+    { name: 'Product galleries', slug: 'product-galleries' },
+    { name: 'Image galleries', slug: 'image-galleries' },
+    { name: 'Navigation', slug: 'navigation-bars' },
+    { name: 'Badges', slug: 'badges' },
+    { name: 'Animations', slug: 'text-animations' },
+    { name: 'Data Display', slug: 'terminal-interfaces' },
+    { name: 'Sections', slug: 'hero-sections' },
   ];
 
   return (
-    <aside className="w-56 shrink-0 border-r border-neutral-900 bg-neutral-950 flex flex-col h-[calc(100vh-3.5rem)] sticky top-14 select-none text-xs">
-      {/* Search Button inside Sidebar */}
-      <div className="p-3 pb-2">
+    <aside className="w-64 shrink-0 border-r border-neutral-900/90 bg-[#09090b] flex flex-col h-screen sticky top-0 select-none text-xs z-40">
+      {/* 1. Top Logo matching 21st.dev Screenshot 1 */}
+      <div className="p-4 pb-2 flex items-center justify-between">
+        <Link href="/" className="flex items-center gap-2 group">
+          {/* Blue geometric 21st logo */}
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-white shadow-md shadow-blue-600/30 font-bold">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 4H12V12H4V4Z" fill="white" />
+              <path d="M12 12H20V20H12V12Z" fill="white" />
+            </svg>
+          </div>
+          <span className="font-black text-lg tracking-tight text-white font-sans">
+            21ST
+          </span>
+        </Link>
+      </div>
+
+      {/* 2. Search Input matching 21st.dev Screenshot 1 */}
+      <div className="px-3 py-2">
         <button
           onClick={onOpenSearch}
-          className="flex w-full items-center justify-between rounded-xl border border-neutral-800/80 bg-neutral-900/60 px-3 py-2 text-neutral-400 hover:border-neutral-700 hover:text-white transition-colors cursor-pointer"
+          className="flex w-full items-center justify-between rounded-xl border border-neutral-800/80 bg-neutral-900/50 px-3 py-2 text-neutral-400 hover:border-neutral-700 hover:text-white transition-colors cursor-pointer"
         >
           <div className="flex items-center gap-2">
             <Search className="h-3.5 w-3.5 text-neutral-400" />
-            <span className="text-xs">Search</span>
+            <span>Search</span>
           </div>
-          <kbd className="inline-flex items-center gap-0.5 rounded bg-neutral-800 px-1.5 py-0.5 text-[10px] font-mono text-neutral-400">
+          <kbd className="inline-flex items-center rounded bg-neutral-800 px-1.5 py-0.5 text-[10px] font-mono text-neutral-400">
             ⌘K
           </kbd>
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-2 space-y-5 scrollbar-none">
+      {/* 3. Main Navigation List */}
+      <div className="flex-1 overflow-y-auto px-3 space-y-4 scrollbar-none pb-4">
         {/* Home Item */}
-        <div className="pt-1">
+        <div>
           <Link
             href="/"
             className={`flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium transition-colors ${
@@ -83,101 +88,195 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
                 : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
             }`}
           >
-            <Home className="h-4 w-4" />
+            <Home className="h-4 w-4 text-neutral-300" />
             <span>Home</span>
           </Link>
         </div>
 
-        {/* Section: Explore */}
-        <div className="space-y-1">
-          <div className="px-3 text-[11px] font-semibold text-neutral-500">Explore</div>
-          <div className="space-y-0.5 pt-0.5">
-            {exploreItems.map((item) => {
-              const isActive = pathname === item.href;
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center justify-between rounded-xl px-3 py-1.5 font-medium transition-colors ${
-                    isActive
-                      ? 'bg-neutral-900 text-white font-semibold'
-                      : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className="h-4 w-4 text-neutral-400" />
-                    <span>{item.label}</span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5">
-                    {item.badge && (
-                      <span className="rounded bg-blue-600/20 text-blue-400 px-1.5 py-0.2 text-[9px] font-bold">
-                        {item.badge}
-                      </span>
-                    )}
-                    {item.count !== undefined && item.count > 0 && (
-                      <span className="rounded-full bg-neutral-800 px-1.5 text-[10px] font-mono text-neutral-400">
-                        {item.count}
-                      </span>
-                    )}
-                    {item.hasChevron && (
-                      <ChevronRight className="h-3 w-3 text-neutral-600" />
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
+        {/* Explore Section matching Screenshot 1 */}
+        <div className="space-y-0.5">
+          <div className="px-3 py-1 text-[11px] font-semibold text-neutral-500">
+            Explore
           </div>
+
+          {/* Components (expandable) */}
+          <div>
+            <div
+              className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors cursor-pointer ${
+                pathname.startsWith('/elements')
+                  ? 'bg-neutral-900 text-white font-semibold'
+                  : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+              }`}
+              onClick={() => setComponentsExpanded(!componentsExpanded)}
+            >
+              <div className="flex items-center gap-2.5">
+                <LayoutGrid className="h-4 w-4 text-neutral-400" />
+                <Link href="/elements" onClick={(e) => e.stopPropagation()}>
+                  <span>Components</span>
+                </Link>
+              </div>
+              <ChevronRight
+                className={`h-3.5 w-3.5 text-neutral-500 transition-transform ${
+                  componentsExpanded ? 'rotate-90' : ''
+                }`}
+              />
+            </div>
+
+            {componentsExpanded && (
+              <div className="ml-6 pl-2 border-l border-neutral-800 space-y-0.5 mt-1">
+                {categories.map((cat) => (
+                  <Link
+                    key={cat.slug}
+                    href={`/elements/${cat.slug}`}
+                    className="block rounded-lg px-2.5 py-1 text-[11px] text-neutral-400 hover:text-white hover:bg-neutral-900/60 transition-colors"
+                  >
+                    {cat.name}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Themes */}
+          <Link
+            href="/elements"
+            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <Palette className="h-4 w-4 text-neutral-400" />
+              <span>Themes</span>
+            </div>
+            <ChevronRight className="h-3.5 w-3.5 text-neutral-500" />
+          </Link>
+
+          {/* Templates */}
+          <Link
+            href="/templates"
+            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <LayoutTemplate className="h-4 w-4 text-neutral-400" />
+              <span>Templates</span>
+            </div>
+            <ChevronRight className="h-3.5 w-3.5 text-neutral-500" />
+          </Link>
+
+          {/* Apps [New] */}
+          <Link
+            href="/product-kits"
+            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <AppWindow className="h-4 w-4 text-neutral-400" />
+              <span>Apps</span>
+            </div>
+            <span className="rounded bg-sky-500/20 text-sky-400 px-1.5 py-0.2 text-[9px] font-bold">
+              New
+            </span>
+          </Link>
+
+          {/* Icons [New] */}
+          <Link
+            href="/elements"
+            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="h-4 w-4 text-neutral-400" />
+              <span>Icons</span>
+            </div>
+            <span className="rounded bg-sky-500/20 text-sky-400 px-1.5 py-0.2 text-[9px] font-bold">
+              New
+            </span>
+          </Link>
+
+          {/* Video [New] */}
+          <Link
+            href="/animations"
+            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <Video className="h-4 w-4 text-neutral-400" />
+              <span>Video</span>
+            </div>
+            <span className="rounded bg-sky-500/20 text-sky-400 px-1.5 py-0.2 text-[9px] font-bold">
+              New
+            </span>
+          </Link>
+
+          {/* Bookmarks */}
+          <Link
+            href="/favorites"
+            className={`flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/favorites'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
+          >
+            <Bookmark className="h-4 w-4 text-neutral-400" />
+            <span>Bookmarks</span>
+          </Link>
         </div>
 
-        {/* Section: Build */}
-        <div className="space-y-1">
-          <div className="px-3 text-[11px] font-semibold text-neutral-500">Build</div>
-          <div className="space-y-0.5 pt-0.5">
-            {buildItems.map((item) => {
-              const isActive = pathname === item.href;
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className={`flex items-center justify-between rounded-xl px-3 py-1.5 font-medium transition-colors ${
-                    isActive
-                      ? 'bg-neutral-900 text-white font-semibold'
-                      : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <Icon className="h-4 w-4 text-neutral-400" />
-                    <span>{item.label}</span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5">
-                    {item.badge && (
-                      <span className="rounded bg-neutral-800 text-neutral-300 px-1.5 py-0.2 text-[9px] font-semibold">
-                        {item.badge}
-                      </span>
-                    )}
-                    {item.hasChevron && (
-                      <ChevronRight className="h-3 w-3 text-neutral-600" />
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
+        {/* Build Section matching Screenshot 1 */}
+        <div className="space-y-0.5">
+          <div className="px-3 py-1 text-[11px] font-semibold text-neutral-500">
+            Build
           </div>
+
+          {/* Creator Studio */}
+          <Link
+            href="/playground"
+            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="h-4 w-4 text-neutral-400" />
+              <span>Creator Studio</span>
+            </div>
+            <ChevronRight className="h-3.5 w-3.5 text-neutral-500" />
+          </Link>
+
+          {/* 21st AI */}
+          <Link
+            href="/experiments"
+            className="flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <Bot className="h-4 w-4 text-neutral-400" />
+            <span>21st AI</span>
+          </Link>
+
+          {/* Design Bug Bot [Try free] */}
+          <Link
+            href="/playground"
+            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <div className="flex items-center gap-2.5">
+              <Layers className="h-4 w-4 text-neutral-400" />
+              <span>Design Bug Bot</span>
+            </div>
+            <span className="rounded bg-sky-500/20 text-sky-400 px-1.5 py-0.2 text-[9px] font-bold">
+              Try free
+            </span>
+          </Link>
+
+          {/* CLI & MCP */}
+          <Link
+            href="/settings"
+            className="flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+          >
+            <Terminal className="h-4 w-4 text-neutral-400" />
+            <span>CLI & MCP</span>
+          </Link>
         </div>
       </div>
 
-      {/* Bottom Publish Pill */}
-      <div className="p-3 border-t border-neutral-900">
+      {/* 4. Bottom Publish Button matching Screenshot 1 */}
+      <div className="p-3 border-t border-neutral-900/90">
         <Link
-          href="/playground"
-          className="flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-900/80 px-3 py-2 text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors"
+          href="/elements"
+          className="flex items-center gap-2 rounded-xl px-3 py-2 text-neutral-400 hover:text-white hover:bg-neutral-900/50 transition-colors font-medium text-xs"
         >
-          <Plus className="h-3.5 w-3.5 text-neutral-400" />
-          <span className="font-semibold text-xs">Publish Component</span>
+          <PlusCircle className="h-4 w-4 text-neutral-400" />
+          <span>Publish</span>
         </Link>
       </div>
     </aside>

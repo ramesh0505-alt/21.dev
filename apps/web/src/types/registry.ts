@@ -18,6 +18,34 @@ export interface ComponentSourceFiles {
   styles?: string;
 }
 
+export interface PropApiDefinition {
+  name: string;
+  type: string;
+  default: string;
+  description: string;
+}
+
+export interface CustomizableProps {
+  text?: string;
+  variant?: string;
+  size?: 'sm' | 'md' | 'lg';
+  color?: string;
+  borderRadius?: string;
+  padding?: string;
+  shimmer?: boolean;
+  speed?: number;
+  maxTilt?: number;
+  glare?: boolean;
+  status?: string;
+}
+
+export interface ComponentMedia {
+  type: 'live' | 'image' | 'video';
+  image?: string;
+  video?: string;
+  poster?: string;
+}
+
 export interface ComponentMeta {
   id: string;
   name: string;
@@ -35,6 +63,12 @@ export interface ComponentMeta {
   sourceFileLocations: ComponentSourceFiles;
   createdAt: string;
   updatedAt: string;
+  media?: ComponentMedia;
+  customizableProps?: CustomizableProps;
+  propsApi?: PropApiDefinition[];
+  accessibilityInfo?: string;
+  similarSlugs?: string[];
+  saveCount?: number;
   code?: {
     component: string;
     demo?: string;
@@ -48,6 +82,6 @@ export interface CategoryDefinition {
   slug: string;
   section: SectionType;
   description: string;
+  icon?: string;
   count?: number;
 }
-

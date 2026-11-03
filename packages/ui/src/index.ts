@@ -10,6 +10,7 @@ export * from './inputs/floating-input';
 export * from './cards/tilt-card';
 export * from './cards/bento-grid';
 export * from './cards/spotlight-card';
+export * from './cards/card-stack';
 
 // Badges
 export * from './badges/status-badge';
@@ -31,3 +32,5 @@ export * from './sections/hero-geometric';
 // Media
 export * from './media/clothing-rail';
 export * from './media/polaroid-gallery';
+export * from './media/sushi-bar';
+export * from './media/lanyard-roster';

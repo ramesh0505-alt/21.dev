@@ -1,5 +1,7 @@
 'use client';
 
+import { CustomizableProps } from '@/types/registry';
+
 export interface UserCollection {
   id: string;
   name: string;
@@ -8,12 +10,23 @@ export interface UserCollection {
   createdAt: string;
 }
 
+export interface RemixedComponent {
+  id: string;
+  originalSlug: string;
+  name: string;
+  slug: string;
+  category: string;
+  customProps: CustomizableProps;
+  customCode: string;
+  createdAt: string;
+}
+
 const FAVORITES_KEY = 'devui_favorites';
 const RECENT_KEY = 'devui_recent';
 const COLLECTIONS_KEY = 'devui_collections';
+const REMIXES_KEY = 'devui_remixes';
 const PM_KEY = 'devui_pm_pref';
 
-// In-memory fallback for environments where localStorage is restricted or in test runners
 const memStore: Record<string, string> = {};
 
 function safeGet(key: string): string | null {
@@ -21,9 +34,7 @@ function safeGet(key: string): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
       return window.localStorage.getItem(key);
     }
-  } catch {
-    // fallback
-  }
+  } catch {}
   return memStore[key] || null;
 }
 
@@ -32,21 +43,8 @@ function safeSet(key: string, value: string): void {
     if (typeof window !== 'undefined' && window.localStorage) {
       window.localStorage.setItem(key, value);
     }
-  } catch {
-    // fallback
-  }
+  } catch {}
   memStore[key] = value;
-}
-
-function safeRemove(key: string): void {
-  try {
-    if (typeof window !== 'undefined' && window.localStorage) {
-      window.localStorage.removeItem(key);
-    }
-  } catch {
-    // fallback
-  }
-  delete memStore[key];
 }
 
 export function getFavorites(): string[] {
@@ -89,14 +87,12 @@ export function getRecentlyViewed(): string[] {
 export function recordRecentView(slug: string): void {
   try {
     const current = getRecentlyViewed().filter((s) => s !== slug);
-    const updated = [slug, ...current].slice(0, 20);
+    const updated = [slug, ...current].slice(0, 30);
     safeSet(RECENT_KEY, JSON.stringify(updated));
     if (typeof window !== 'undefined') {
       window.dispatchEvent(new Event('devui_storage_updated'));
     }
-  } catch {
-    // Ignore storage errors
-  }
+  } catch {}
 }
 
 export function getCollections(): UserCollection[] {
@@ -116,7 +112,7 @@ export function getCollections(): UserCollection[] {
             id: 'col-landing',
             name: 'Landing Page Heroics',
             description: 'Eye-catching elements for marketing and conversion pages',
-            componentSlugs: ['hero-geometric', 'tilt-card', 'shimmer-button', 'text-shimmer'],
+            componentSlugs: ['hero-geometric', 'tilt-card', 'shimmer-button', 'text-shimmer', 'clothing-rail'],
             createdAt: new Date().toISOString(),
           },
         ];
@@ -139,6 +135,59 @@ export function createCollection(name: string, description?: string): UserCollec
     window.dispatchEvent(new Event('devui_storage_updated'));
   }
   return newCol;
+}
+
+export function toggleCollectionItem(collectionId: string, slug: string): boolean {
+  const current = getCollections();
+  let added = false;
+  const updated = current.map((c) => {
+    if (c.id === collectionId) {
+      if (c.componentSlugs.includes(slug)) {
+        return { ...c, componentSlugs: c.componentSlugs.filter((s) => s !== slug) };
+      } else {
+        added = true;
+        return { ...c, componentSlugs: [...c.componentSlugs, slug] };
+      }
+    }
+    return c;
+  });
+  safeSet(COLLECTIONS_KEY, JSON.stringify(updated));
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('devui_storage_updated'));
+  }
+  return added;
+}
+
+// Remixed components
+export function getRemixes(): RemixedComponent[] {
+  try {
+    const raw = safeGet(REMIXES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function saveRemix(remix: Omit<RemixedComponent, 'id' | 'createdAt'>): RemixedComponent {
+  const current = getRemixes();
+  const newRemix: RemixedComponent = {
+    ...remix,
+    id: `remix-${Date.now()}`,
+    createdAt: new Date().toISOString(),
+  };
+  safeSet(REMIXES_KEY, JSON.stringify([newRemix, ...current]));
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('devui_storage_updated'));
+  }
+  return newRemix;
+}
+
+export function deleteRemix(id: string): void {
+  const current = getRemixes().filter((r) => r.id !== id);
+  safeSet(REMIXES_KEY, JSON.stringify(current));
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('devui_storage_updated'));
+  }
 }
 
 export type PackageManager = 'pnpm' | 'npm' | 'yarn' | 'bun';

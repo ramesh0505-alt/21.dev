@@ -1,0 +1,23 @@
+{
+  "id": "crd-card-stack",
+  "name": "Holographic Payment Card Stack",
+  "slug": "card-stack",
+  "category": "Cards",
+  "section": "cards",
+  "description": "Interactive stacked debit/credit cards that fan out on hover with metallic luster, EMV chips, and contactless symbols.",
+  "tags": ["cards", "fintech", "payment", "stack", "holographic", "interactive", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "CardStackDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/cards/card-stack/card-stack.tsx",
+    "demo": "packages/ui/src/cards/card-stack/card-stack.demo.tsx",
+    "meta": "packages/ui/src/cards/card-stack/meta.json",
+    "readme": "packages/ui/src/cards/card-stack/README.md"
+  },
+  "createdAt": "2026-11-03T15:25:00.000Z",
+  "updatedAt": "2026-11-03T15:25:00.000Z"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "med-sushi-bar",
+  "name": "Rotating Sushi Conveyor Turntable",
+  "slug": "sushi-bar",
+  "category": "Product galleries",
+  "section": "media",
+  "description": "Revolving conveyor carousel featuring parametric oval trajectory, authentic Japanese sushi dishes, and spring rotation physics.",
+  "tags": ["media", "sushi", "conveyor", "carousel", "3d", "interactive", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "SushiBarDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/media/sushi-bar/sushi-bar.tsx",
+    "demo": "packages/ui/src/media/sushi-bar/sushi-bar.demo.tsx",
+    "meta": "packages/ui/src/media/sushi-bar/meta.json",
+    "readme": "packages/ui/src/media/sushi-bar/README.md"
+  },
+  "createdAt": "2026-11-03T15:20:00.000Z",
+  "updatedAt": "2026-11-03T15:20:00.000Z"
+}

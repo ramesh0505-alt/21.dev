@@ -6,9 +6,15 @@ import { ClothingRail } from './clothing-rail';
 export function ClothingRailDemo() {
   return (
     <div className="w-full">
-      <ClothingRail />
+      <ClothingRail showCta={false} />
     </div>
   );
 }
 
-export default ClothingRailDemo;
+export function ClothingRailCardPreview() {
+  return (
+    <div className="w-full bg-white text-neutral-900 rounded-xl overflow-hidden py-4 px-2 scale-[0.85] origin-center">
+      <ClothingRail theme="light" showCta={true} />
+    </div>
+  );
+}

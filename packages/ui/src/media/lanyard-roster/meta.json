@@ -1,0 +1,23 @@
+{
+  "id": "med-lanyard-roster",
+  "name": "Hanging Lanyard ID Badge Roster",
+  "slug": "lanyard-roster",
+  "category": "Product galleries",
+  "section": "media",
+  "description": "Physical conference lanyard passes hanging on suspension wire with spring pendulum physics, pass tags, and QR barcodes.",
+  "tags": ["media", "team", "roster", "lanyard", "badges", "interactive", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "LanyardRosterDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/media/lanyard-roster/lanyard-roster.tsx",
+    "demo": "packages/ui/src/media/lanyard-roster/lanyard-roster.demo.tsx",
+    "meta": "packages/ui/src/media/lanyard-roster/meta.json",
+    "readme": "packages/ui/src/media/lanyard-roster/README.md"
+  },
+  "createdAt": "2026-11-03T15:22:00.000Z",
+  "updatedAt": "2026-11-03T15:22:00.000Z"
+}

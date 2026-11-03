@@ -12,3 +12,4 @@ export function PolaroidGalleryDemo() {
 }
 
 export default PolaroidGalleryDemo;
+
