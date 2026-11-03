@@ -6,6 +6,7 @@ import React from 'react';
 import { TiltCardDemo } from '@ui-library/ui';
 import { AnimatedButtonDemo } from '@ui-library/ui';
 import { BentoGridDemo } from '@ui-library/ui';
+import { CoffeePourMenuDemo } from '@ui-library/ui';
 import { FloatingDockDemo } from '@ui-library/ui';
 import { FloatingInputDemo } from '@ui-library/ui';
 import { HeroGeometricDemo } from '@ui-library/ui';
@@ -29,6 +30,7 @@ export const componentDemos: Record<string, React.ComponentType<any>> = {
   'tilt-card': TiltCardDemo,
   'animated-button': AnimatedButtonDemo,
   'bento-grid': BentoGridDemo,
+  'coffee-menu': CoffeePourMenuDemo,
   'floating-dock': FloatingDockDemo,
   'floating-input': FloatingInputDemo,
   'hero-geometric': HeroGeometricDemo,

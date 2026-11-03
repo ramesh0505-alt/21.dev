@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Publish Button Animation</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #080808;
+    font-family: Arial, sans-serif;
+}
+
+.publish-btn {
+    width: 175px;
+    height: 50px;
+    border: none;
+    border-radius: 9px;
+    background: #eeeeee;
+    color: #222222;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    transition:
+        background 0.35s ease,
+        color 0.35s ease,
+        transform 0.15s ease;
+}
+
+.publish-btn:active {
+    transform: scale(0.96);
+}
+
+.loader,
+.success-icon,
+.success-text {
+    display: none;
+}
+
+/* Loading */
+
+.publish-btn.loading .btn-text {
+    display: none;
+}
+
+.publish-btn.loading .loader {
+    display: block;
+}
+
+.loader {
+    width: 22px;
+    height: 22px;
+
+    border: 2px solid rgba(255, 100, 100, 0.3);
+    border-top-color: #ff6b6b;
+
+    border-radius: 50%;
+
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Success */
+
+.publish-btn.success {
+    background: #22c55e;
+    color: white;
+}
+
+.publish-btn.success .btn-text,
+.publish-btn.success .loader {
+    display: none;
+}
+
+.publish-btn.success .success-icon,
+.publish-btn.success .success-text {
+    display: inline;
+}
+
+.success-icon {
+    font-size: 21px;
+    animation: checkPop 0.35s ease;
+}
+
+.success-text {
+    animation: textAppear 0.35s ease;
+}
+
+@keyframes checkPop {
+
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    70% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+}
+
+@keyframes textAppear {
+
+    from {
+        opacity: 0;
+        transform: translateX(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<button class="publish-btn" id="publishBtn">
+
+    <span class="btn-text">Publish</span>
+
+    <span class="loader"></span>
+
+    <span class="success-icon">✓</span>
+
+    <span class="success-text">Published</span>
+
+</button>
+
+<script>
+
+const publishBtn = document.getElementById("publishBtn");
+
+publishBtn.addEventListener("click", () => {
+
+    if (publishBtn.classList.contains("loading")) {
+        return;
+    }
+
+    // Start loading
+    publishBtn.classList.add("loading");
+
+    // Publishing simulation
+    setTimeout(() => {
+
+        publishBtn.classList.remove("loading");
+
+        publishBtn.classList.add("success");
+
+        // Reset
+        setTimeout(() => {
+            publishBtn.classList.remove("success");
+        }, 2000);
+
+    }, 1500);
+
+});
+
+</script>
+
+</body>
+</html>

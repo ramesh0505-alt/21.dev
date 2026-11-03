@@ -8,12 +8,11 @@ import {
   Copy,
   Check,
   ChevronDown,
+  ChevronUp,
   Download,
   Share2,
-  Layers,
   Code2,
   Terminal,
-  FolderPlus,
 } from 'lucide-react';
 import { ComponentMeta } from '@/types/registry';
 import {
@@ -21,36 +20,31 @@ import {
   toggleFavorite,
   getInstallCommand,
   getPackageManagerPreference,
-  getCollections,
-  UserCollection,
 } from '@/lib/storage';
 import { downloadComponentZip } from '@/lib/export-zip';
-import { getSimilarComponents } from '@/lib/similar';
 
 interface ActionBarProps {
   component: ComponentMeta;
   onOpenRemix?: () => void;
-  onSelectSimilar?: (similarComp: ComponentMeta) => void;
+  onToggleSimilar?: () => void;
+  isSimilarView?: boolean;
 }
 
-export function ActionBar({ component, onOpenRemix, onSelectSimilar }: ActionBarProps) {
+export function ActionBar({
+  component,
+  onOpenRemix,
+  onToggleSimilar,
+  isSimilarView = false,
+}: ActionBarProps) {
   const [saved, setSaved] = useState(false);
   const [copiedType, setCopiedType] = useState<string | null>(null);
   const [copyDropdownOpen, setCopyDropdownOpen] = useState(false);
-  const [similarOpen, setSimilarOpen] = useState(false);
-  const [collections, setCollections] = useState<UserCollection[]>([]);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const similarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setSaved(isFavorite(component.slug));
-    setCollections(getCollections());
-
-    const update = () => {
-      setSaved(isFavorite(component.slug));
-      setCollections(getCollections());
-    };
+    const update = () => setSaved(isFavorite(component.slug));
     window.addEventListener('devui_storage_updated', update);
     return () => window.removeEventListener('devui_storage_updated', update);
   }, [component.slug]);
@@ -60,9 +54,6 @@ export function ActionBar({ component, onOpenRemix, onSelectSimilar }: ActionBar
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setCopyDropdownOpen(false);
-      }
-      if (similarRef.current && !similarRef.current.contains(e.target as Node)) {
-        setSimilarOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -92,11 +83,9 @@ export function ActionBar({ component, onOpenRemix, onSelectSimilar }: ActionBar
     setTimeout(() => setCopiedType(null), 2500);
   };
 
-  const similarComponents = getSimilarComponents(component.slug, 4);
-
   return (
     <div className="relative mx-auto flex flex-col items-center gap-2 pointer-events-auto select-none">
-      {/* 1. Main Action Bar matching 21st.dev Screenshot 2 */}
+      {/* 1. Main Action Bar matching 21st.dev Screenshot & Video */}
       <div className="flex items-center gap-1.5 sm:gap-2 rounded-2xl border border-neutral-800/90 bg-neutral-900/95 p-1.5 shadow-2xl backdrop-blur-xl text-xs">
         {/* Remix Button */}
         {onOpenRemix ? (
@@ -199,45 +188,20 @@ export function ActionBar({ component, onOpenRemix, onSelectSimilar }: ActionBar
         </div>
       </div>
 
-      {/* 2. "See similar v" Centered Button matching 21st.dev Screenshot 2 */}
-      <div className="relative" ref={similarRef}>
+      {/* 2. "See similar v" / "Back to preview ^" Trigger Button matching the video */}
+      {onToggleSimilar && (
         <button
-          onClick={() => setSimilarOpen(!similarOpen)}
-          className="flex items-center gap-1.5 rounded-full border border-neutral-800 bg-neutral-950/90 px-3.5 py-1 text-[11px] font-medium text-neutral-300 hover:border-neutral-700 hover:text-white transition-colors shadow-lg cursor-pointer"
+          onClick={onToggleSimilar}
+          className="flex items-center gap-1.5 rounded-full border border-neutral-800 bg-neutral-950/95 px-4 py-1.5 text-[11px] font-medium text-neutral-300 hover:border-neutral-700 hover:text-white hover:bg-neutral-900 transition-all shadow-lg cursor-pointer"
         >
-          <span>See similar</span>
-          <ChevronDown className={`h-3 w-3 text-neutral-400 transition-transform ${similarOpen ? 'rotate-180' : ''}`} />
+          <span>{isSimilarView ? 'Back to preview' : 'See similar'}</span>
+          {isSimilarView ? (
+            <ChevronUp className="h-3.5 w-3.5 text-neutral-400" />
+          ) : (
+            <ChevronDown className="h-3.5 w-3.5 text-neutral-400" />
+          )}
         </button>
-
-        {/* Similar Components Flyout */}
-        {similarOpen && (
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-80 rounded-2xl border border-neutral-800 bg-neutral-950 p-3 shadow-2xl animate-in fade-in slide-in-from-bottom-2 duration-150 z-50">
-            <div className="text-[11px] font-semibold text-neutral-400 px-2 pb-2 border-b border-neutral-800/80">
-              Related in {component.category}
-            </div>
-            <div className="space-y-1 pt-2 max-h-60 overflow-y-auto">
-              {similarComponents.map((sim) => (
-                <button
-                  key={sim.id}
-                  onClick={() => {
-                    onSelectSimilar?.(sim);
-                    setSimilarOpen(false);
-                  }}
-                  className="flex w-full items-center justify-between rounded-xl px-2.5 py-2 text-left hover:bg-neutral-900 transition-colors cursor-pointer"
-                >
-                  <div>
-                    <div className="font-medium text-neutral-200 text-xs">{sim.name}</div>
-                    <div className="text-[10px] text-neutral-500 font-mono">{sim.category}</div>
-                  </div>
-                  <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded">
-                    {sim.status}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

@@ -1,0 +1,209 @@
+You are given a task to integrate an existing React component in the codebase
+
+The codebase should support:
+- shadcn project structure  
+- Tailwind CSS
+- Typescript
+
+If it doesn't, provide instructions on how to setup project via shadcn CLI, install Tailwind or Typescript.
+
+Determine the default path for components and styles. 
+If default path for components is not /components/ui, provide instructions on why it's important to create this folder
+Copy-paste this component to /components/ui folder:
+```tsx
+constellation-vortex.tsx
+"use client";
+
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef } from "react";
+
+// Fresh curated aesthetic imagery across art, modern design, and architecture
+const GALLERY_ITEMS = [
+    {
+        src: "https://cdn.21st.dev/assets/mirror/cb/cbfd431f11582c8f9a5bce68e2ae4e57c8a2bb09de7e7c7aed9874fe69db8db9.jpg",
+        alt: "Abstract Contemporary Artwork"
+    },
+    {
+        src: "https://cdn.21st.dev/assets/mirror/d2/d238fae863937c611a9d043cf7f1e509fff5ef44fcaa892de69ad067d16d12fd.jpg",
+        alt: "Modern Architectural Geometry"
+    },
+    {
+        src: "https://cdn.21st.dev/assets/mirror/67/67fd446805ad94bcd738b45ae67f449d9b66519b8a9614ca187a82c1c7663cc6.jpg",
+        alt: "Luxury Minimalist Interior"
+    },
+    {
+        src: "https://cdn.21st.dev/assets/mirror/0e/0e74af4223fbc2fe7e3314c0fc717c0e41cb1638e6d960829a1960c8ab731916.jpg",
+        alt: "Colorful Abstract Art"
+    },
+    {
+        src: "https://cdn.21st.dev/assets/mirror/35/359ce88b8524072b6476b16f1dff5a96b51b140c0e6404e172b7e20ceaf49398.jpg",
+        alt: "Contemporary Architecture"
+    },
+    {
+        src: "https://cdn.21st.dev/assets/mirror/50/50dd4d80a516500ca571fd2cde59d3ace861d8cc9e0c92ceba6331559e9e4394.jpg",
+        alt: "Contemporary Interior Design"
+    },
+    {
+        src: "https://cdn.21st.dev/assets/mirror/16/162a1da98353f759440b8eda6b57bbad18c589c05e8cf247a8109009cf197007.jpg",
+        alt: "Creative Visual Composition"
+    },
+    {
+        src: "https://cdn.21st.dev/assets/mirror/7b/7b07c13384545d22b04d487855a99738375a2583c6fb53ca51796039d66c2313.jpg",
+        alt: "Modern Artistic Composition"
+    },
+];
+
+interface ConstellationItem {
+    item: { src: string; alt: string };
+    startPos: { x: number; y: number; rotate: number };
+    endPos: { x: number; y: number; rotate: number };
+    delay: number;
+}
+
+// Generate deterministic layout positions for fixed-size stable cards
+const generateConstellation = (): ConstellationItem[] => {
+    const total = GALLERY_ITEMS.length;
+    return GALLERY_ITEMS.map((item, i) => {
+        // Compute unique off-screen starting scatter coordinates (in vh/vw)
+        const angle = (i / total) * Math.PI * 2;
+        const scatterRadiusX = 45 + (i % 3) * 12;
+        const scatterRadiusY = 40 + (i % 2) * 15;
+
+        const startX = Math.cos(angle) * scatterRadiusX;
+        const startY = Math.sin(angle) * scatterRadiusY;
+
+        // Compute final fixed position in a balanced floating grid/cluster around center
+        // Responsive grid offsets using vw/vh units
+        const gridCols = 4;
+        const col = i % gridCols;
+        const row = Math.floor(i / gridCols);
+
+        const finalX = (col - 1.5) * 21; // Stable offset in vw
+        const finalY = (row - 0.5) * 28; // Stable offset in vh
+
+        return {
+            item,
+            startPos: { x: startX, y: startY, rotate: (i % 2 === 0 ? 1 : -1) * (25 + i * 5) },
+            endPos: { x: finalX, y: finalY, rotate: (i % 3 === 0 ? 2 : -2) * (i % 4) },
+            delay: i * 0.04,
+        };
+    });
+};
+
+const CONSTELLATION_ITEMS = generateConstellation();
+
+function ConstellationCard({ data, progress }: { data: ConstellationItem; progress: any }) {
+    const { item, startPos, endPos } = data;
+
+    // Map scroll progress to smooth coordinate translations without changing scale
+    const x = useTransform(progress, [0, 0.85], [startPos.x, endPos.x]);
+    const y = useTransform(progress, [0, 0.85], [startPos.y, endPos.y]);
+    const rotate = useTransform(progress, [0, 0.85], [startPos.rotate, endPos.rotate]);
+
+    // Fade in quickly, stay fully opaque, and fade out smoothly at the very end
+    const opacity = useTransform(progress, [0, 0.15, 0.8, 1], [0, 1, 1, 0]);
+
+    return (
+        <motion.div
+            className="absolute left-1/2 top-1/2 will-change-transform w-32 h-44 sm:w-40 sm:h-56 md:w-52 md:h-72 pointer-events-auto"
+            style={{
+                x: useTransform(x, (val) => `calc(-50% + ${val}vw)`),
+                y: useTransform(y, (val) => `calc(-50% + ${val}vh)`),
+                rotate,
+                opacity,
+            }}
+        >
+            <div className="group relative h-full w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 shadow-xl dark:shadow-2xl transition-all duration-300 hover:border-neutral-400 dark:hover:border-neutral-600">
+                <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-30 group-hover:opacity-10 pointer-events-none" />
+            </div>
+        </motion.div>
+    );
+}
+
+export default function ConstellationVortex() {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start start", "end end"],
+    });
+
+    // Silky smooth spring physics for scroll response
+    const progress = useSpring(scrollYProgress, {
+        stiffness: 55,
+        damping: 22,
+        restDelta: 0.001,
+    });
+
+    const headerOpacity = useTransform(progress, [0, 0.25, 0.75, 0.95], [1, 0, 0, 1]);
+    const headerY = useTransform(progress, [0, 0.25], [0, -30]);
+
+    return (
+        <section
+            ref={containerRef}
+            className="relative w-full h-[250vh] bg-white dark:bg-black text-neutral-900 dark:text-white overflow-clip transition-colors duration-300"
+        >
+            <div className="sticky top-0 h-[100svh] w-full overflow-hidden flex items-center justify-center bg-white dark:bg-black">
+
+                {/* Main Floating Cards Constellation */}
+                <div className="absolute inset-0 z-10 pointer-events-none">
+                    {CONSTELLATION_ITEMS.map((data, i) => (
+                        <ConstellationCard key={i} data={data} progress={progress} />
+                    ))}
+                </div>
+
+                {/* Center Overlay Header / Typography */}
+                <motion.div
+                    className="absolute z-20 text-center pointer-events-none px-4 max-w-2xl"
+                    style={{ opacity: headerOpacity, y: headerY }}
+                >
+                    <span className="text-xs uppercase tracking-[0.3em] text-neutral-500 dark:text-neutral-400 font-semibold mb-3 block">
+                        Interactive Gallery
+                    </span>
+                    <h2 className="text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+                        Constellation Convergence
+                    </h2>
+                    <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-md mx-auto">
+                        Scroll down to watch disparate visual elements converge into a unified spatial arrangement at a fixed, stable size.
+                    </p>
+                </motion.div>
+            </div>
+        </section>
+    );
+}
+
+demo.tsx
+import ConstellationVortex from "@/components/ui/constellation-vortex";
+
+export default function ConstellationVortexDemo() {
+  return <ConstellationVortex />;
+}
+
+```
+
+Install NPM dependencies:
+```bash
+framer-motion
+```
+
+Implementation Guidelines
+ 1. Analyze the component structure and identify all required dependencies
+ 2. Review the component's argumens and state
+ 3. Identify any required context providers or hooks and install them
+ 4. Questions to Ask
+ - What data/props will be passed to this component?
+ - Are there any specific state management requirements?
+ - Are there any required assets (images, icons, etc.)?
+ - What is the expected responsive behavior?
+ - What is the best place to use this component in the app?
+
+Steps to integrate
+ 0. Copy paste all the code above in the correct directories
+ 1. Install external dependencies
+ 2. Fill image assets with Unsplash stock images you know exist
+ 3. Use lucide-react icons for svgs or logos if component requires them

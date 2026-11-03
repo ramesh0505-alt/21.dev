@@ -11,14 +11,14 @@ import { ComponentMeta } from '@/types/registry';
 export default function DashboardPage() {
   const [selectedComponent, setSelectedComponent] = useState<ComponentMeta | null>(null);
 
-  // Top today components matching Screenshot 1 exactly
-  const topTodaySlugs = ['clothing-rail', 'sushi-bar', 'lanyard-roster', 'card-stack'];
+  // Top today components matching Screenshot 1 & the user's video demonstration
+  const topTodaySlugs = ['clothing-rail', 'coffee-menu', 'sushi-bar', 'lanyard-roster'];
   const topToday = topTodaySlugs
     .map((slug) => registry.find((c) => c.slug === slug))
     .filter(Boolean) as ComponentMeta[];
 
-  // New & noteworthy components matching Screenshot 1 row 2
-  const newNoteworthySlugs = ['polaroid-gallery', 'hero-geometric', 'animated-button', 'text-shimmer'];
+  // New & noteworthy components
+  const newNoteworthySlugs = ['polaroid-gallery', 'card-stack', 'hero-geometric', 'text-shimmer'];
   const newNoteworthy = newNoteworthySlugs
     .map((slug) => registry.find((c) => c.slug === slug))
     .filter(Boolean) as ComponentMeta[];
@@ -47,7 +47,7 @@ export default function DashboardPage() {
           </Link>
         </div>
 
-        {/* 4-column horizontal card grid with 1, 2, 3, 4 watermark ranking numbers and white preview stages */}
+        {/* 4-column horizontal card grid with 1, 2, 3, 4 watermark ranking numbers */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 pt-2">
           {topToday.map((comp, idx) => (
             <ComponentCard
@@ -83,7 +83,7 @@ export default function DashboardPage() {
             <ComponentCard
               key={comp.id}
               component={comp}
-              previewBg={comp.slug === 'animated-button' ? 'light' : 'dark'}
+              previewBg={comp.slug === 'card-stack' ? 'light' : 'dark'}
               onSelect={(c) => setSelectedComponent(c)}
             />
           ))}
@@ -122,7 +122,7 @@ export default function DashboardPage() {
         </section>
       )}
 
-      {/* 21st.dev Style Component Preview Modal matching Screenshot 2 */}
+      {/* 21st.dev Style Component Preview Modal with Similar Grid matching the video */}
       <ComponentModal
         component={selectedComponent}
         onClose={() => setSelectedComponent(null)}

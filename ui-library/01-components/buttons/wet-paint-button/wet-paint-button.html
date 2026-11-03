@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Rounded Wet Paint Button</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: #080808;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* =================================
+       BUTTON
+    ================================= */
+
+    .paint-button {
+      position: relative;
+
+      width: 200px;
+      height: 58px;
+
+      border: none;
+      outline: none;
+
+      border-radius: 999px;
+
+      background: #5b4cff;
+      color: #ffffff;
+
+      font-size: 18px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      z-index: 10;
+
+      overflow: visible;
+
+      box-shadow:
+        0 8px 20px rgba(91, 76, 255, 0.25);
+
+      transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+
+    /* =================================
+       HOVER
+    ================================= */
+
+    .paint-button:hover {
+      transform: translateY(-3px);
+
+      background: #6859ff;
+
+      box-shadow:
+        0 12px 30px rgba(91, 76, 255, 0.35);
+    }
+
+
+    .paint-button:active {
+      transform: translateY(0) scale(0.97);
+    }
+
+
+    /* =================================
+       PAINT DRIPS
+    ================================= */
+
+    .drip {
+      position: absolute;
+
+      top: 43px;
+
+      width: 12px;
+
+      background: #5b4cff;
+
+      border-radius:
+        0 0
+        999px
+        999px;
+
+      transform-origin: top;
+
+      pointer-events: none;
+    }
+
+
+    /* Rounded paint end */
+
+    .drip::after {
+      content: "";
+
+      position: absolute;
+
+      left: 50%;
+      bottom: -6px;
+
+      width: 12px;
+      height: 12px;
+
+      transform: translateX(-50%);
+
+      background: #5b4cff;
+
+      border-radius: 50%;
+    }
+
+
+    /* =================================
+       INDIVIDUAL DRIPS
+    ================================= */
+
+    .drip-1 {
+      left: 23px;
+      height: 25px;
+
+      animation:
+        dripOne 2.5s
+        ease-in-out
+        infinite;
+    }
+
+
+    .drip-2 {
+      left: 62px;
+      width: 9px;
+      height: 17px;
+
+      animation:
+        dripTwo 2.8s
+        ease-in-out
+        infinite;
+    }
+
+
+    .drip-2::after {
+      width: 9px;
+      height: 9px;
+    }
+
+
+    .drip-3 {
+      left: 105px;
+      width: 14px;
+      height: 21px;
+
+      animation:
+        dripThree 2.3s
+        ease-in-out
+        infinite;
+    }
+
+
+    .drip-3::after {
+      width: 14px;
+      height: 14px;
+    }
+
+
+    .drip-4 {
+      right: 25px;
+      width: 11px;
+      height: 24px;
+
+      animation:
+        dripFour 2.7s
+        ease-in-out
+        infinite;
+    }
+
+
+    .drip-4::after {
+      width: 11px;
+      height: 11px;
+    }
+
+
+    /* =================================
+       DRIP ANIMATIONS
+    ================================= */
+
+    @keyframes dripOne {
+
+      0%,
+      100% {
+        height: 25px;
+      }
+
+      35% {
+        height: 31px;
+      }
+
+      55% {
+        height: 19px;
+      }
+
+      75% {
+        height: 27px;
+      }
+    }
+
+
+    @keyframes dripTwo {
+
+      0%,
+      100% {
+        height: 17px;
+      }
+
+      40% {
+        height: 25px;
+      }
+
+      65% {
+        height: 15px;
+      }
+    }
+
+
+    @keyframes dripThree {
+
+      0%,
+      100% {
+        height: 21px;
+      }
+
+      30% {
+        height: 30px;
+      }
+
+      55% {
+        height: 18px;
+      }
+
+      80% {
+        height: 25px;
+      }
+    }
+
+
+    @keyframes dripFour {
+
+      0%,
+      100% {
+        height: 24px;
+      }
+
+      45% {
+        height: 32px;
+      }
+
+      65% {
+        height: 20px;
+      }
+    }
+
+
+    /* =================================
+       FALLING DROPS
+    ================================= */
+
+    .drop {
+      position: absolute;
+
+      top: 70px;
+
+      width: 9px;
+      height: 9px;
+
+      background: #5b4cff;
+
+      border-radius: 50%;
+
+      opacity: 0;
+
+      pointer-events: none;
+
+      animation:
+        fallingDrop
+        2.4s
+        linear
+        infinite;
+    }
+
+
+    .drop-1 {
+      left: 27px;
+
+      animation-delay: 0.2s;
+    }
+
+
+    .drop-2 {
+      left: 111px;
+
+      width: 7px;
+      height: 7px;
+
+      animation-delay: 1s;
+    }
+
+
+    .drop-3 {
+      right: 27px;
+
+      width: 8px;
+      height: 8px;
+
+      animation-delay: 1.6s;
+    }
+
+
+    .drop-4 {
+      left: 64px;
+
+      width: 6px;
+      height: 6px;
+
+      animation-delay: 2s;
+    }
+
+
+    /* =================================
+       FALLING ANIMATION
+    ================================= */
+
+    @keyframes fallingDrop {
+
+      0% {
+        opacity: 0;
+
+        transform:
+          translateY(0)
+          scale(0.4);
+      }
+
+      15% {
+        opacity: 1;
+
+        transform:
+          translateY(5px)
+          scale(1);
+      }
+
+      50% {
+        opacity: 0.9;
+      }
+
+      100% {
+        opacity: 0;
+
+        transform:
+          translateY(65px)
+          scale(0.65);
+      }
+    }
+
+
+    /* =================================
+       EXTRA PAINT SPOTS
+    ================================= */
+
+    .paint-spot {
+      position: absolute;
+
+      background: #5b4cff;
+
+      border-radius: 50%;
+
+      pointer-events: none;
+
+      opacity: 0;
+
+      animation:
+        spotAnimation
+        3s
+        ease-out
+        infinite;
+    }
+
+
+    .spot-1 {
+      left: 44px;
+      top: 70px;
+
+      width: 5px;
+      height: 5px;
+
+      animation-delay: 0.8s;
+    }
+
+
+    .spot-2 {
+      left: 143px;
+      top: 68px;
+
+      width: 4px;
+      height: 4px;
+
+      animation-delay: 1.5s;
+    }
+
+
+    @keyframes spotAnimation {
+
+      0% {
+        opacity: 0;
+
+        transform:
+          translateY(0)
+          scale(0.3);
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+
+        transform:
+          translateY(55px)
+          scale(0.8);
+      }
+    }
+
+
+    /* =================================
+       MOBILE
+    ================================= */
+
+    @media (max-width: 500px) {
+
+      .paint-button {
+        width: 180px;
+        height: 54px;
+
+        font-size: 16px;
+      }
+
+      .drip {
+        top: 40px;
+      }
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =================================
+       BUTTON
+  ================================= -->
+
+  <button class="paint-button">
+
+    Wet Paint
+
+    <!-- Paint drips -->
+    <span class="drip drip-1"></span>
+    <span class="drip drip-2"></span>
+    <span class="drip drip-3"></span>
+    <span class="drip drip-4"></span>
+
+    <!-- Falling droplets -->
+    <span class="drop drop-1"></span>
+    <span class="drop drop-2"></span>
+    <span class="drop drop-3"></span>
+    <span class="drop drop-4"></span>
+
+    <!-- Tiny paint spots -->
+    <span class="paint-spot spot-1"></span>
+    <span class="paint-spot spot-2"></span>
+
+  </button>
+
+
+</body>
+</html>

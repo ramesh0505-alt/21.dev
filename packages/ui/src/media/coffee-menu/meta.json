@@ -1,0 +1,23 @@
+{
+  "id": "med-coffee-menu",
+  "name": "Coffee Pour Menu",
+  "slug": "coffee-menu",
+  "category": "Product galleries",
+  "section": "media",
+  "description": "Interactive café beverage menu featuring realistic coffee vessels (ceramic cappuccino cup, tall latte glass, americano mug, espresso demitasse), pouring streams, and crema latte art.",
+  "tags": ["media", "coffee", "menu", "ecommerce", "interactive", "motion", "pour"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "CoffeePourMenuDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/media/coffee-menu/coffee-menu.tsx",
+    "demo": "packages/ui/src/media/coffee-menu/coffee-menu.demo.tsx",
+    "meta": "packages/ui/src/media/coffee-menu/meta.json",
+    "readme": "packages/ui/src/media/coffee-menu/README.md"
+  },
+  "createdAt": "2026-11-03T16:00:00.000Z",
+  "updatedAt": "2026-11-03T16:00:00.000Z"
+}

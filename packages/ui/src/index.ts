@@ -34,3 +34,4 @@ export * from './media/clothing-rail';
 export * from './media/polaroid-gallery';
 export * from './media/sushi-bar';
 export * from './media/lanyard-roster';
+export * from './media/coffee-menu';
