@@ -1,0 +1,23 @@
+{
+  "id": "bdg-status-badge",
+  "name": "Status Badge",
+  "slug": "status-badge",
+  "category": "Badges",
+  "section": "elements",
+  "description": "System state indicator badge with animated ping radar wave and calibrated status colorways.",
+  "tags": ["badge", "status", "indicator", "ping", "system"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "StatusBadgeDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/badges/status-badge/status-badge.tsx",
+    "demo": "packages/ui/src/badges/status-badge/status-badge.demo.tsx",
+    "meta": "packages/ui/src/badges/status-badge/meta.json",
+    "readme": "packages/ui/src/badges/status-badge/README.md"
+  },
+  "createdAt": "2026-11-03T12:40:00.000Z",
+  "updatedAt": "2026-11-03T12:40:00.000Z"
+}

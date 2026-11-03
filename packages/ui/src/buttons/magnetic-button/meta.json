@@ -1,0 +1,23 @@
+{
+  "id": "btn-magnetic-button",
+  "name": "Magnetic Button",
+  "slug": "magnetic-button",
+  "category": "Buttons",
+  "section": "elements",
+  "description": "Interactive button that physically gravitates toward the cursor using spring physics and relative cursor bounding box calculations.",
+  "tags": ["button", "magnetic", "cursor", "spring", "physics"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "MagneticButtonDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/buttons/magnetic-button/magnetic-button.tsx",
+    "demo": "packages/ui/src/buttons/magnetic-button/magnetic-button.demo.tsx",
+    "meta": "packages/ui/src/buttons/magnetic-button/meta.json",
+    "readme": "packages/ui/src/buttons/magnetic-button/README.md"
+  },
+  "createdAt": "2026-11-03T10:30:00.000Z",
+  "updatedAt": "2026-11-03T10:30:00.000Z"
+}

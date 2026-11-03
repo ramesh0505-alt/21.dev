@@ -1,0 +1,23 @@
+{
+  "id": "btn-shimmer-button",
+  "name": "Shimmer Button",
+  "slug": "shimmer-button",
+  "category": "Buttons",
+  "section": "elements",
+  "description": "Premium dark-mode button featuring an animated conic gradient border shimmer and deep navy backdrop.",
+  "tags": ["button", "shimmer", "border", "glow", "gradient"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "ShimmerButtonDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/buttons/shimmer-button/shimmer-button.tsx",
+    "demo": "packages/ui/src/buttons/shimmer-button/shimmer-button.demo.tsx",
+    "meta": "packages/ui/src/buttons/shimmer-button/meta.json",
+    "readme": "packages/ui/src/buttons/shimmer-button/README.md"
+  },
+  "createdAt": "2026-11-03T11:00:00.000Z",
+  "updatedAt": "2026-11-03T11:00:00.000Z"
+}

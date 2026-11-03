@@ -1,0 +1,23 @@
+{
+  "id": "inp-floating-input",
+  "name": "Floating Input",
+  "slug": "floating-input",
+  "category": "Inputs",
+  "section": "elements",
+  "description": "Ergonomic text input featuring CSS-driven floating label transitions, error states, and emerald focus glow.",
+  "tags": ["input", "form", "floating-label", "text-field"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "FloatingInputDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/inputs/floating-input/floating-input.tsx",
+    "demo": "packages/ui/src/inputs/floating-input/floating-input.demo.tsx",
+    "meta": "packages/ui/src/inputs/floating-input/meta.json",
+    "readme": "packages/ui/src/inputs/floating-input/README.md"
+  },
+  "createdAt": "2026-11-03T11:20:00.000Z",
+  "updatedAt": "2026-11-03T11:20:00.000Z"
+}

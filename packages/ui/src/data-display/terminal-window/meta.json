@@ -1,0 +1,23 @@
+{
+  "id": "dsp-terminal-window",
+  "name": "Terminal Window",
+  "slug": "terminal-window",
+  "category": "Terminal interfaces",
+  "section": "data-display",
+  "description": "Developer console emulator window featuring window controls, syntax-highlighted command output, and one-click clipboard copying.",
+  "tags": ["data-display", "terminal", "console", "cli", "code"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["lucide-react", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "TerminalWindowDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/data-display/terminal-window/terminal-window.tsx",
+    "demo": "packages/ui/src/data-display/terminal-window/terminal-window.demo.tsx",
+    "meta": "packages/ui/src/data-display/terminal-window/meta.json",
+    "readme": "packages/ui/src/data-display/terminal-window/README.md"
+  },
+  "createdAt": "2026-11-03T14:00:00.000Z",
+  "updatedAt": "2026-11-03T14:00:00.000Z"
+}

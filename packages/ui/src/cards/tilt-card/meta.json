@@ -1,0 +1,23 @@
+{
+  "id": "crd-tilt-card",
+  "name": "3D Tilt Card",
+  "slug": "tilt-card",
+  "category": "Cards",
+  "section": "elements",
+  "description": "Interactive card featuring smooth 3D parallax mouse tilt physics, depth perspective, and radial glare reflection.",
+  "tags": ["card", "tilt", "3d", "parallax", "glare", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "TiltCardDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/cards/tilt-card/tilt-card.tsx",
+    "demo": "packages/ui/src/cards/tilt-card/tilt-card.demo.tsx",
+    "meta": "packages/ui/src/cards/tilt-card/meta.json",
+    "readme": "packages/ui/src/cards/tilt-card/README.md"
+  },
+  "createdAt": "2026-11-03T11:40:00.000Z",
+  "updatedAt": "2026-11-03T11:40:00.000Z"
+}

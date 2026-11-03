@@ -1,0 +1,23 @@
+{
+  "id": "crd-bento-grid",
+  "name": "Bento Grid",
+  "slug": "bento-grid",
+  "category": "Cards",
+  "section": "elements",
+  "description": "Asymmetric multi-column feature showcase grid with subtle hover borders, responsive layout spans, and badge highlights.",
+  "tags": ["card", "bento", "grid", "features", "layout"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "BentoGridDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/cards/bento-grid/bento-grid.tsx",
+    "demo": "packages/ui/src/cards/bento-grid/bento-grid.demo.tsx",
+    "meta": "packages/ui/src/cards/bento-grid/meta.json",
+    "readme": "packages/ui/src/cards/bento-grid/README.md"
+  },
+  "createdAt": "2026-11-03T12:00:00.000Z",
+  "updatedAt": "2026-11-03T12:00:00.000Z"
+}

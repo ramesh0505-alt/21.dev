@@ -1,0 +1,23 @@
+{
+  "id": "dsp-stats-card",
+  "name": "Stats Card",
+  "slug": "stats-card",
+  "category": "Statistics",
+  "section": "data-display",
+  "description": "Developer metrics summary card with trend indicator badges and reactive inline SVG sparklines.",
+  "tags": ["data-display", "statistics", "metrics", "sparkline", "chart"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["lucide-react", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "StatsCardDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/data-display/stats-card/stats-card.tsx",
+    "demo": "packages/ui/src/data-display/stats-card/stats-card.demo.tsx",
+    "meta": "packages/ui/src/data-display/stats-card/meta.json",
+    "readme": "packages/ui/src/data-display/stats-card/README.md"
+  },
+  "createdAt": "2026-11-03T14:20:00.000Z",
+  "updatedAt": "2026-11-03T14:20:00.000Z"
+}

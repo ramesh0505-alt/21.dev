@@ -1,0 +1,25 @@
+{
+  "id": "btn-animated-button",
+  "name": "Animated Button",
+  "slug": "animated-button",
+  "category": "Buttons",
+  "section": "elements",
+  "description": "High-performance interactive motion button featuring tactile spring scaling, optional continuous shimmer beam, and polymorphic loading/icon slots.",
+  "tags": ["button", "motion", "interactive", "shimmer", "tactile"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "lucide-react", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "AnimatedButtonDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/buttons/animated-button/animated-button.tsx",
+    "demo": "packages/ui/src/buttons/animated-button/animated-button.demo.tsx",
+    "test": "packages/ui/src/buttons/animated-button/animated-button.test.tsx",
+    "meta": "packages/ui/src/buttons/animated-button/meta.json",
+    "readme": "packages/ui/src/buttons/animated-button/README.md"
+  },
+  "createdAt": "2026-11-03T10:00:00.000Z",
+  "updatedAt": "2026-11-03T10:00:00.000Z"
+}
+

@@ -1,0 +1,23 @@
+{
+  "id": "nav-tabs-slider",
+  "name": "Tabs Slider",
+  "slug": "tabs-slider",
+  "category": "Tabs",
+  "section": "navigation",
+  "description": "Fluid sliding indicator tabs bar utilizing Framer Motion layoutId for physics-based pill animations.",
+  "tags": ["navigation", "tabs", "slider", "layoutId", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "TabsSliderDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/navigation/tabs-slider/tabs-slider.tsx",
+    "demo": "packages/ui/src/navigation/tabs-slider/tabs-slider.demo.tsx",
+    "meta": "packages/ui/src/navigation/tabs-slider/meta.json",
+    "readme": "packages/ui/src/navigation/tabs-slider/README.md"
+  },
+  "createdAt": "2026-11-03T13:20:00.000Z",
+  "updatedAt": "2026-11-03T13:20:00.000Z"
+}

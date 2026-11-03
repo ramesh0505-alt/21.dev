@@ -1,0 +1,23 @@
+{
+  "id": "sec-hero-geometric",
+  "name": "Geometric Hero",
+  "slug": "hero-geometric",
+  "category": "Hero sections",
+  "section": "sections",
+  "description": "Developer landing hero section with release badge pill, emerald gradient headline, dual call-to-actions, and interactive copyable CLI bar.",
+  "tags": ["sections", "hero", "landing", "cta", "cli"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["lucide-react", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "HeroGeometricDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/sections/hero-geometric/hero-geometric.tsx",
+    "demo": "packages/ui/src/sections/hero-geometric/hero-geometric.demo.tsx",
+    "meta": "packages/ui/src/sections/hero-geometric/meta.json",
+    "readme": "packages/ui/src/sections/hero-geometric/README.md"
+  },
+  "createdAt": "2026-11-03T14:40:00.000Z",
+  "updatedAt": "2026-11-03T14:40:00.000Z"
+}

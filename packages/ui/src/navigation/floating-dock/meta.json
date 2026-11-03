@@ -1,0 +1,23 @@
+{
+  "id": "nav-floating-dock",
+  "name": "Floating Dock",
+  "slug": "floating-dock",
+  "category": "Navigation bars",
+  "section": "navigation",
+  "description": "macOS-inspired desktop floating navigation bar with mouse cursor proximity magnification and spring physics.",
+  "tags": ["navigation", "dock", "macos", "spring", "magnification", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "FloatingDockDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/navigation/floating-dock/floating-dock.tsx",
+    "demo": "packages/ui/src/navigation/floating-dock/floating-dock.demo.tsx",
+    "meta": "packages/ui/src/navigation/floating-dock/meta.json",
+    "readme": "packages/ui/src/navigation/floating-dock/README.md"
+  },
+  "createdAt": "2026-11-03T13:00:00.000Z",
+  "updatedAt": "2026-11-03T13:00:00.000Z"
+}

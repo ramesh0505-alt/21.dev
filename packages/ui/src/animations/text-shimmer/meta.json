@@ -1,0 +1,23 @@
+{
+  "id": "anim-text-shimmer",
+  "name": "Text Shimmer",
+  "slug": "text-shimmer",
+  "category": "Text animations",
+  "section": "animations",
+  "description": "Smooth gradient mask text shimmer animation revealing light sweeps across editorial typography.",
+  "tags": ["animation", "text", "shimmer", "typography", "gradient"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "TextShimmerDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/animations/text-shimmer/text-shimmer.tsx",
+    "demo": "packages/ui/src/animations/text-shimmer/text-shimmer.demo.tsx",
+    "meta": "packages/ui/src/animations/text-shimmer/meta.json",
+    "readme": "packages/ui/src/animations/text-shimmer/README.md"
+  },
+  "createdAt": "2026-11-03T13:40:00.000Z",
+  "updatedAt": "2026-11-03T13:40:00.000Z"
+}

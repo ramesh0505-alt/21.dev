@@ -1,0 +1,23 @@
+{
+  "id": "crd-spotlight-card",
+  "name": "Spotlight Card",
+  "slug": "spotlight-card",
+  "category": "Cards",
+  "section": "elements",
+  "description": "Card component with cursor-following radial spotlight highlight and smooth fade transitions.",
+  "tags": ["card", "spotlight", "glow", "hover", "interactive"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "SpotlightCardDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/cards/spotlight-card/spotlight-card.tsx",
+    "demo": "packages/ui/src/cards/spotlight-card/spotlight-card.demo.tsx",
+    "meta": "packages/ui/src/cards/spotlight-card/meta.json",
+    "readme": "packages/ui/src/cards/spotlight-card/README.md"
+  },
+  "createdAt": "2026-11-03T12:20:00.000Z",
+  "updatedAt": "2026-11-03T12:20:00.000Z"
+}

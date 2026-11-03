@@ -1,0 +1,16 @@
+{
+  "name": "personal-ui-library-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "build": "pnpm generate-registry && pnpm --filter web build",
+    "generate-registry": "tsx scripts/generate-registry.ts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  }
+}
