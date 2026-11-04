@@ -1,0 +1,23 @@
+{
+  "id": "btn-celebration-button",
+  "name": "Celebration Particle Button",
+  "slug": "celebration-button",
+  "category": "Buttons",
+  "section": "buttons",
+  "description": "Tactile celebration button with colorful particle explosion, radial burst physics, and ring glow on trigger.",
+  "tags": ["buttons", "celebration", "particles", "confetti", "interactive", "feedback"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "CelebrationButtonDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/buttons/celebration-button/celebration-button.tsx",
+    "demo": "packages/ui/src/buttons/celebration-button/celebration-button.demo.tsx",
+    "meta": "packages/ui/src/buttons/celebration-button/meta.json",
+    "readme": "packages/ui/src/buttons/celebration-button/README.md"
+  },
+  "createdAt": "2026-11-03T16:20:00.000Z",
+  "updatedAt": "2026-11-03T16:20:00.000Z"
+}

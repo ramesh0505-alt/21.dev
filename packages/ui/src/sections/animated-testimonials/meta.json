@@ -1,0 +1,23 @@
+{
+  "id": "sec-animated-testimonials",
+  "name": "Animated Testimonials Card Stack",
+  "slug": "animated-testimonials",
+  "category": "Testimonials",
+  "section": "sections",
+  "description": "3D card stack testimonial showcase with kinetic word blur reveals, spring card elevation, and smooth carousel transitions.",
+  "tags": ["sections", "testimonials", "cards", "stack", "3d", "motion", "reviews"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "AnimatedTestimonialsDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/sections/animated-testimonials/animated-testimonials.tsx",
+    "demo": "packages/ui/src/sections/animated-testimonials/animated-testimonials.demo.tsx",
+    "meta": "packages/ui/src/sections/animated-testimonials/meta.json",
+    "readme": "packages/ui/src/sections/animated-testimonials/README.md"
+  },
+  "createdAt": "2026-11-03T16:35:00.000Z",
+  "updatedAt": "2026-11-03T16:35:00.000Z"
+}

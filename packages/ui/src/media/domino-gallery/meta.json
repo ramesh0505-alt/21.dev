@@ -1,0 +1,23 @@
+{
+  "id": "med-domino-gallery",
+  "name": "Domino Falling Card Gallery",
+  "slug": "domino-gallery",
+  "category": "Image galleries",
+  "section": "media",
+  "description": "3D domino topple gallery where standing cards accelerate into gravity falls and bounce off the floor with spring settle physics.",
+  "tags": ["media", "gallery", "domino", "3d", "perspective", "physics", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "DominoGalleryDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/media/domino-gallery/domino-gallery.tsx",
+    "demo": "packages/ui/src/media/domino-gallery/domino-gallery.demo.tsx",
+    "meta": "packages/ui/src/media/domino-gallery/meta.json",
+    "readme": "packages/ui/src/media/domino-gallery/README.md"
+  },
+  "createdAt": "2026-11-04T15:30:00.000Z",
+  "updatedAt": "2026-11-04T15:30:00.000Z"
+}

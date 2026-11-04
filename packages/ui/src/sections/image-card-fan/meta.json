@@ -1,0 +1,23 @@
+{
+  "id": "sec-image-card-fan",
+  "name": "Image Card Fan Hero",
+  "slug": "image-card-fan",
+  "category": "Hero sections",
+  "section": "sections",
+  "description": "Tactile poker hand card fan with spring arc distribution, hover lift, card selection, and adjacent details.",
+  "tags": ["heroes", "cards", "fan", "gallery", "interactive", "motion", "spring"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "ImageCardFanDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/sections/image-card-fan/image-card-fan.tsx",
+    "demo": "packages/ui/src/sections/image-card-fan/image-card-fan.demo.tsx",
+    "meta": "packages/ui/src/sections/image-card-fan/meta.json",
+    "readme": "packages/ui/src/sections/image-card-fan/README.md"
+  },
+  "createdAt": "2026-11-04T15:35:00.000Z",
+  "updatedAt": "2026-11-04T15:35:00.000Z"
+}

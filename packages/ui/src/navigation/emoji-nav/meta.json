@@ -1,0 +1,23 @@
+{
+  "id": "nav-emoji-nav",
+  "name": "Emoji Floating Navigation Bar",
+  "slug": "emoji-nav",
+  "category": "Navigation bars",
+  "section": "navigation",
+  "description": "Floating pill navigation dock with animated emoji links, tooltips, and spring scale micro-interactions.",
+  "tags": ["navigation", "emoji", "dock", "pill", "menu", "interactive"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "EmojiNavDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/navigation/emoji-nav/emoji-nav.tsx",
+    "demo": "packages/ui/src/navigation/emoji-nav/emoji-nav.demo.tsx",
+    "meta": "packages/ui/src/navigation/emoji-nav/meta.json",
+    "readme": "packages/ui/src/navigation/emoji-nav/README.md"
+  },
+  "createdAt": "2026-11-04T15:40:00.000Z",
+  "updatedAt": "2026-11-04T15:40:00.000Z"
+}

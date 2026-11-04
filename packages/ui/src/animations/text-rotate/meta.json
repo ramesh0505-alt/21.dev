@@ -1,0 +1,23 @@
+{
+  "id": "anim-text-rotate",
+  "name": "Kinetic Text Rotator",
+  "slug": "text-rotate",
+  "category": "Text animations",
+  "section": "animations",
+  "description": "Morphing and rotating kinetic typography with spring transitions, auto-cycling, and zero layout shift.",
+  "tags": ["animations", "text", "rotate", "kinetic", "typography", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["motion", "clsx", "tailwind-merge"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "TextRotateDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/animations/text-rotate/text-rotate.tsx",
+    "demo": "packages/ui/src/animations/text-rotate/text-rotate.demo.tsx",
+    "meta": "packages/ui/src/animations/text-rotate/meta.json",
+    "readme": "packages/ui/src/animations/text-rotate/README.md"
+  },
+  "createdAt": "2026-11-03T16:30:00.000Z",
+  "updatedAt": "2026-11-03T16:30:00.000Z"
+}

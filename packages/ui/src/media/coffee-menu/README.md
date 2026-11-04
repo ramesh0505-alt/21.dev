@@ -7,3 +7,4 @@ Interactive café beverage menu featuring realistic coffee vessels, pouring stre
 ```bash
 pnpm add motion clsx tailwind-merge lucide-react
 ```
+

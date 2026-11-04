@@ -3,16 +3,24 @@ import registryData from './registry.json';
 import type { ComponentMeta } from '@/types/registry';
 import React from 'react';
 
+import { CoverflowCarouselDemo } from '@ui-library/ui';
 import { TiltCardDemo } from '@ui-library/ui';
 import { AnimatedButtonDemo } from '@ui-library/ui';
+import { AnimatedTestimonialsDemo } from '@ui-library/ui';
 import { BentoGridDemo } from '@ui-library/ui';
+import { CelebrationButtonDemo } from '@ui-library/ui';
 import { CoffeePourMenuDemo } from '@ui-library/ui';
+import { DominoGalleryDemo } from '@ui-library/ui';
+import { EmojiNavDemo } from '@ui-library/ui';
+import { ExpandingCardsDemo } from '@ui-library/ui';
 import { FloatingDockDemo } from '@ui-library/ui';
 import { FloatingInputDemo } from '@ui-library/ui';
 import { HeroGeometricDemo } from '@ui-library/ui';
 import { LanyardRosterDemo } from '@ui-library/ui';
 import { PolaroidGalleryDemo } from '@ui-library/ui';
 import { CardStackDemo } from '@ui-library/ui';
+import { ImageCardFanDemo } from '@ui-library/ui';
+import { TextRotateDemo } from '@ui-library/ui';
 import { MagneticButtonDemo } from '@ui-library/ui';
 import { ClothingRailDemo } from '@ui-library/ui';
 import { SushiBarDemo } from '@ui-library/ui';
@@ -27,16 +35,24 @@ import { TextShimmerDemo } from '@ui-library/ui';
 export const registry: ComponentMeta[] = registryData as unknown as ComponentMeta[];
 
 export const componentDemos: Record<string, React.ComponentType<any>> = {
+  'coverflow-carousel': CoverflowCarouselDemo,
   'tilt-card': TiltCardDemo,
   'animated-button': AnimatedButtonDemo,
+  'animated-testimonials': AnimatedTestimonialsDemo,
   'bento-grid': BentoGridDemo,
+  'celebration-button': CelebrationButtonDemo,
   'coffee-menu': CoffeePourMenuDemo,
+  'domino-gallery': DominoGalleryDemo,
+  'emoji-nav': EmojiNavDemo,
+  'expanding-cards': ExpandingCardsDemo,
   'floating-dock': FloatingDockDemo,
   'floating-input': FloatingInputDemo,
   'hero-geometric': HeroGeometricDemo,
   'lanyard-roster': LanyardRosterDemo,
   'polaroid-gallery': PolaroidGalleryDemo,
   'card-stack': CardStackDemo,
+  'image-card-fan': ImageCardFanDemo,
+  'text-rotate': TextRotateDemo,
   'magnetic-button': MagneticButtonDemo,
   'clothing-rail': ClothingRailDemo,
   'sushi-bar': SushiBarDemo,

@@ -1,0 +1,23 @@
+{
+  "id": "crd-expanding-cards",
+  "name": "Expanding Cards Accordion",
+  "slug": "expanding-cards",
+  "category": "Cards",
+  "section": "cards",
+  "description": "Fluid CSS grid expanding card accordion with 5fr/1fr ratio transitions, vertical titles, and rich imagery.",
+  "tags": ["cards", "accordion", "grid", "gallery", "responsive", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "ExpandingCardsDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/cards/expanding-cards/expanding-cards.tsx",
+    "demo": "packages/ui/src/cards/expanding-cards/expanding-cards.demo.tsx",
+    "meta": "packages/ui/src/cards/expanding-cards/meta.json",
+    "readme": "packages/ui/src/cards/expanding-cards/README.md"
+  },
+  "createdAt": "2026-11-03T16:15:00.000Z",
+  "updatedAt": "2026-11-03T16:15:00.000Z"
+}

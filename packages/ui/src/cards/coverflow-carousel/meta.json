@@ -1,0 +1,23 @@
+{
+  "id": "crd-coverflow-carousel",
+  "name": "3D Coverflow Carousel",
+  "slug": "coverflow-carousel",
+  "category": "Cards",
+  "section": "cards",
+  "description": "Apple-style 3D Coverflow perspective carousel with exponential ease-out settle physics, non-linear angle falloff, and smooth looping ring.",
+  "tags": ["cards", "carousel", "3d", "coverflow", "perspective", "gallery", "motion"],
+  "framework": "React 19",
+  "stylingSystem": "Tailwind CSS",
+  "dependencies": ["clsx", "tailwind-merge", "lucide-react"],
+  "version": "1.0.0",
+  "status": "Ready",
+  "previewReference": "CoverflowCarouselDemo",
+  "sourceFileLocations": {
+    "component": "packages/ui/src/cards/coverflow-carousel/coverflow-carousel.tsx",
+    "demo": "packages/ui/src/cards/coverflow-carousel/coverflow-carousel.demo.tsx",
+    "meta": "packages/ui/src/cards/coverflow-carousel/meta.json",
+    "readme": "packages/ui/src/cards/coverflow-carousel/README.md"
+  },
+  "createdAt": "2026-11-03T16:25:00.000Z",
+  "updatedAt": "2026-11-03T16:25:00.000Z"
+}
