@@ -18,7 +18,8 @@ import {
   Eye,
 } from 'lucide-react';
 import { ComponentMeta } from '@/types/registry';
-import { componentDemos, registry } from '@/registry';
+import { componentDemos } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ActionBar } from './action-bar';
 import { isFavorite, toggleFavorite } from '@/lib/storage';
 import { getSimilarComponents } from '@/lib/similar';
@@ -31,6 +32,7 @@ interface ComponentModalProps {
 
 export function ComponentModal({ component, onClose }: ComponentModalProps) {
   const router = useRouter();
+  const registry = useAdminComponents();
   const [remountKey, setRemountKey] = useState(0);
   const [saved, setSaved] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);

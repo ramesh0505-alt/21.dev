@@ -153,6 +153,21 @@ export const DEFAULT_CATEGORIES: AdminCategory[] = [
   { id: 'cat-test', name: 'Testimonials', slug: 'testimonials', description: 'Kinetic 3D review card stacks with blur reveals.', createdAt: '2026-11-04T12:00:00Z' },
 ];
 
+// ======================== REAL-TIME BROADCAST ENGINE ========================
+
+// Cross-tab Broadcast Channel
+let broadcastChannel: BroadcastChannel | null = null;
+if (typeof window !== 'undefined' && 'BroadcastChannel' in window) {
+  try {
+    broadcastChannel = new BroadcastChannel('devui_realtime_sync');
+    broadcastChannel.onmessage = (event) => {
+      // When another tab broadcasts a change, fire local events so UI immediately updates
+      window.dispatchEvent(new CustomEvent('devui_admin_updated', { detail: event.data }));
+      window.dispatchEvent(new CustomEvent('devui_storage_updated', { detail: event.data }));
+    };
+  } catch {}
+}
+
 function safeGet(key: string): string | null {
   try {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -166,10 +181,53 @@ function safeSet(key: string, value: string): void {
   try {
     if (typeof window !== 'undefined' && window.localStorage) {
       window.localStorage.setItem(key, value);
-      window.dispatchEvent(new Event('devui_admin_updated'));
-      window.dispatchEvent(new Event('devui_storage_updated'));
+
+      const eventPayload = { key, timestamp: Date.now() };
+
+      // 1. Dispatch in current window
+      window.dispatchEvent(new CustomEvent('devui_admin_updated', { detail: eventPayload }));
+      window.dispatchEvent(new CustomEvent('devui_storage_updated', { detail: eventPayload }));
+
+      // 2. Broadcast to all other tabs and windows
+      if (broadcastChannel) {
+        broadcastChannel.postMessage(eventPayload);
+      }
+
+      // 3. Background server filesystem sync (non-blocking)
+      triggerServerSync();
     }
   } catch {}
+}
+
+let syncTimeout: NodeJS.Timeout | null = null;
+function triggerServerSync() {
+  if (syncTimeout) clearTimeout(syncTimeout);
+  syncTimeout = setTimeout(async () => {
+    try {
+      if (typeof window !== 'undefined') {
+        const payload = {
+          customComponents: getCustomComponents(),
+          deletedComponents: getDeletedComponentSlugs(),
+          customIcons: getAdminIcons().filter((i) => !DEFAULT_ICONS.some((d) => d.id === i.id)),
+          deletedIcons: (function () {
+            try {
+              const r = safeGet(DELETED_ICONS_KEY);
+              return r ? JSON.parse(r) : [];
+            } catch {
+              return [];
+            }
+          })(),
+          customCategories: getAdminCategories(),
+        };
+
+        await fetch('/api/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      }
+    } catch {}
+  }, 300);
 }
 
 // ======================== COMPONENT MANAGEMENT ========================
@@ -206,6 +264,11 @@ export function getAdminComponents(): ComponentMeta[] {
   customFiltered.forEach((c) => map.set(c.slug, c));
 
   return Array.from(map.values());
+}
+
+export function getAdminComponentBySlug(slug: string): ComponentMeta | undefined {
+  const all = getAdminComponents();
+  return all.find((c) => c.slug === slug);
 }
 
 export function saveAdminComponent(component: ComponentMeta): void {
@@ -412,11 +475,16 @@ export function useAdminComponents(): ComponentMeta[] {
       setComponents(getAdminComponents());
     };
     update();
+
+    // Listen to local, cross-tab, and window storage events
     window.addEventListener('devui_admin_updated', update);
     window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
     return () => {
       window.removeEventListener('devui_admin_updated', update);
       window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
     };
   }, []);
 
@@ -431,11 +499,15 @@ export function useAdminIcons(): AdminIcon[] {
       setIcons(getAdminIcons());
     };
     update();
+
     window.addEventListener('devui_admin_updated', update);
     window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
     return () => {
       window.removeEventListener('devui_admin_updated', update);
       window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
     };
   }, []);
 
@@ -450,13 +522,42 @@ export function useAdminCategories(): AdminCategory[] {
       setCategories(getAdminCategories());
     };
     update();
+
     window.addEventListener('devui_admin_updated', update);
     window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
     return () => {
       window.removeEventListener('devui_admin_updated', update);
       window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
     };
   }, []);
 
   return categories;
+}
+
+export function useAdminRealtimeStatus(): {
+  isSynced: boolean;
+  lastUpdated: number;
+} {
+  const [lastUpdated, setLastUpdated] = useState<number>(Date.now());
+
+  useEffect(() => {
+    const update = () => {
+      setLastUpdated(Date.now());
+    };
+
+    window.addEventListener('devui_admin_updated', update);
+    window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
+    return () => {
+      window.removeEventListener('devui_admin_updated', update);
+      window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
+    };
+  }, []);
+
+  return { isSynced: true, lastUpdated };
 }

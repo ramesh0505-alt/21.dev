@@ -2,10 +2,11 @@
 
 import React from 'react';
 import { Layers, ArrowRight, LayoutTemplate } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 
 export default function SectionsPage() {
+  const registry = useAdminComponents();
   const sectionComponents = registry.filter(
     (c) =>
       c.section === 'sections' ||

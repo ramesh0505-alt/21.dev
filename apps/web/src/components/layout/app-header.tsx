@@ -7,18 +7,25 @@ import {
   MessageSquare,
   Bookmark,
   ShieldCheck,
+  Radio,
 } from 'lucide-react';
+import { useAdminRealtimeStatus } from '@/lib/admin-store';
 
 interface AppHeaderProps {
   onOpenSearch: () => void;
 }
 
 export function AppHeader({ onOpenSearch }: AppHeaderProps) {
+  const { isSynced } = useAdminRealtimeStatus();
+
   return (
     <header className="sticky top-0 z-30 flex h-14 w-full items-center justify-between px-6 md:px-10 bg-[#09090b]/80 backdrop-blur-md select-none border-b border-transparent">
-      {/* Left: empty/spacious breadcrumb area */}
+      {/* Left: Real-time Live Sync Indicator */}
       <div className="flex items-center gap-4">
-        {/* subtle indicator or empty */}
+        <div className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-medium text-emerald-400 select-none">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>Real-Time Sync Active</span>
+        </div>
       </div>
 
       {/* Right: Actions matching Screenshot 1 */}

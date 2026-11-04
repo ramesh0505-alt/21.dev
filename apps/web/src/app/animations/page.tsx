@@ -3,10 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { Sparkles, ArrowRight, Play, Cpu, Zap, Activity } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 
 export default function AnimationsPage() {
+  const registry = useAdminComponents();
   const animationComponents = registry.filter(
     (c) =>
       c.section === 'animations' ||

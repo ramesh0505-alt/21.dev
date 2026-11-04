@@ -100,3 +100,4 @@ export function getComponentMedia(slug: string, name?: string): ComponentMediaSl
     caption: `${name || slug} visual component preview and interactive demonstration`,
   };
 }
+

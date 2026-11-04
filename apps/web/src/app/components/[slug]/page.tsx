@@ -31,6 +31,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { getComponentBySlug, componentDemos } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import {
   isFavorite,
   toggleFavorite,
@@ -52,7 +53,8 @@ export default function ComponentDetailPage({
 }) {
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
-  const component = getComponentBySlug(slug);
+  const registry = useAdminComponents();
+  const component = registry.find((c) => c.slug === slug);
   const router = useRouter();
 
   if (!component) {
