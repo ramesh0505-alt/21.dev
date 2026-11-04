@@ -62,6 +62,8 @@ export default function AdminComponentsPage() {
     previewReference: string;
     componentCode: string;
     demoCode: string;
+    imageUrl: string;
+    videoUrl: string;
   }>({
     id: '',
     name: '',
@@ -75,6 +77,8 @@ export default function AdminComponentsPage() {
     previewReference: 'animated-button',
     componentCode: `import React from 'react';\n\nexport function CustomComponent() {\n  return (\n    <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-4 text-center">\n      <h3 className="font-bold text-white">Custom Component</h3>\n      <p className="text-xs text-neutral-400 mt-1">Ready for production</p>\n    </div>\n  );\n}`,
     demoCode: `import { CustomComponent } from './custom-component';\n\nexport default function Demo() {\n  return <CustomComponent />;\n}`,
+    imageUrl: '',
+    videoUrl: '',
   });
 
   const availableDemoSlugs = Object.keys(componentDemos);
@@ -105,6 +109,8 @@ export default function AdminComponentsPage() {
       previewReference: 'animated-button',
       componentCode: `import React from 'react';\n\nexport function CustomComponent() {\n  return (\n    <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-4 text-center">\n      <h3 className="font-bold text-white">Custom Component</h3>\n      <p className="text-xs text-neutral-400 mt-1">Ready for production</p>\n    </div>\n  );\n}`,
       demoCode: `import { CustomComponent } from './custom-component';\n\nexport default function Demo() {\n  return <CustomComponent />;\n}`,
+      imageUrl: '',
+      videoUrl: '',
     });
     setIsModalOpen(true);
   };
@@ -125,6 +131,8 @@ export default function AdminComponentsPage() {
       previewReference: comp.previewReference || 'animated-button',
       componentCode: comp.code?.component || '',
       demoCode: comp.code?.demo || '',
+      imageUrl: comp.media?.image || '',
+      videoUrl: comp.media?.video || '',
     });
     setIsModalOpen(true);
   };
@@ -176,6 +184,11 @@ export default function AdminComponentsPage() {
         component: `packages/ui/src/${formData.section}/${formData.slug}/${formData.slug}.tsx`,
         demo: `packages/ui/src/${formData.section}/${formData.slug}/${formData.slug}.demo.tsx`,
         meta: `packages/ui/src/${formData.section}/${formData.slug}/${formData.slug}.meta.json`,
+      },
+      media: {
+        type: formData.videoUrl ? 'video' : formData.imageUrl ? 'image' : 'live',
+        image: formData.imageUrl.trim() || undefined,
+        video: formData.videoUrl.trim() || undefined,
       },
       createdAt: editingComponent?.createdAt || now,
       updatedAt: now,
@@ -688,6 +701,35 @@ export default function AdminComponentsPage() {
                 <p className="text-[10px] text-neutral-500">
                   Select a live preview harness for rendering in cards and modal stages.
                 </p>
+              </div>
+
+              {/* Image & Video Preview Slots */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="font-semibold text-neutral-300">Image Preview Slot URL</label>
+                  <input
+                    type="url"
+                    value={formData.imageUrl}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, imageUrl: e.target.value }))
+                    }
+                    placeholder="https://.../preview.jpg"
+                    className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]"
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="font-semibold text-neutral-300">Video Preview Slot URL</label>
+                  <input
+                    type="url"
+                    value={formData.videoUrl}
+                    onChange={(e) =>
+                      setFormData((prev) => ({ ...prev, videoUrl: e.target.value }))
+                    }
+                    placeholder="https://.../preview.mp4"
+                    className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]"
+                  />
+                </div>
               </div>
 
               {/* Component Source Code */}

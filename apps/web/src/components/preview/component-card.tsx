@@ -83,6 +83,14 @@ export function ComponentCard({ component, ranking, previewBg = 'dark', onSelect
             <div className="text-xs text-neutral-500 font-mono">Live Preview</div>
           )}
 
+          {/* Quick slot indicators on top left */}
+          <div className="absolute top-3 left-3 flex items-center gap-1 z-30">
+            <span className="inline-flex items-center gap-1 rounded-md bg-black/60 backdrop-blur-sm border border-neutral-800 px-2 py-0.5 text-[9px] font-mono text-neutral-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>Preview Slot</span>
+            </span>
+          </div>
+
           {/* Floating Quick Action Overlay on Hover */}
           <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity z-30">
             <button
