@@ -2,11 +2,12 @@
 
 import React, { useState, useMemo } from 'react';
 import { Search, Filter, Layers, CheckCircle2, SlidersHorizontal } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 import { ComponentStatus } from '@/types/registry';
 
 export default function ElementsPage() {
+  const registry = useAdminComponents();
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [selectedStatus, setSelectedStatus] = useState<string>('All');

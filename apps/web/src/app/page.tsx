@@ -3,13 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 import { ComponentModal } from '@/components/preview/component-modal';
 import { ComponentMeta } from '@/types/registry';
 
 export default function DashboardPage() {
   const [selectedComponent, setSelectedComponent] = useState<ComponentMeta | null>(null);
+  const registry = useAdminComponents();
 
   // Top today components matching Screenshot 1 & the user's video demonstration
   const topTodaySlugs = ['clothing-rail', 'coffee-menu', 'sushi-bar', 'lanyard-roster'];

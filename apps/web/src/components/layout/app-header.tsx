@@ -6,6 +6,7 @@ import {
   Gem,
   MessageSquare,
   Bookmark,
+  ShieldCheck,
 } from 'lucide-react';
 
 interface AppHeaderProps {
@@ -22,6 +23,15 @@ export function AppHeader({ onOpenSearch }: AppHeaderProps) {
 
       {/* Right: Actions matching Screenshot 1 */}
       <div className="flex items-center gap-3">
+        {/* Admin Studio link */}
+        <Link
+          href="/admin"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-400 hover:bg-emerald-500/20 hover:text-emerald-300 transition-all cursor-pointer shadow-sm"
+        >
+          <ShieldCheck className="h-3.5 w-3.5" />
+          <span>Admin</span>
+        </Link>
+
         {/* Upgrade pill with diamond */}
         <button className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-medium text-neutral-300 hover:text-white transition-colors cursor-pointer">
           <Gem className="h-3.5 w-3.5 text-purple-400" />

@@ -14,13 +14,14 @@ import {
   Bookmark,
   Layers,
 } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 import { ComponentModal } from '@/components/preview/component-modal';
 import { ComponentMeta } from '@/types/registry';
 import { getFavorites } from '@/lib/storage';
 
 export default function DiscoverPage() {
+  const registry = useAdminComponents();
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedTech, setSelectedTech] = useState('All');

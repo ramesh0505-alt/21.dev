@@ -177,8 +177,12 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
 
           {/* Icons [New] */}
           <Link
-            href="/elements"
-            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+            href="/admin/icons"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/admin/icons'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
           >
             <div className="flex items-center gap-2.5">
               <Sparkles className="h-4 w-4 text-neutral-400" />
@@ -266,17 +270,35 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
             <Terminal className="h-4 w-4 text-neutral-400" />
             <span>CLI & MCP</span>
           </Link>
+
+          {/* Admin Studio */}
+          <Link
+            href="/admin"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname.startsWith('/admin')
+                ? 'bg-emerald-500/10 text-emerald-400 font-semibold border border-emerald-500/20'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Layers className="h-4 w-4 text-emerald-400" />
+              <span>Admin Studio</span>
+            </div>
+            <span className="rounded bg-emerald-500/20 text-emerald-400 px-1.5 py-0.2 text-[9px] font-bold">
+              Admin
+            </span>
+          </Link>
         </div>
       </div>
 
       {/* 4. Bottom Publish Button matching Screenshot 1 */}
       <div className="p-3 border-t border-neutral-900/90">
         <Link
-          href="/elements"
+          href="/admin/components"
           className="flex items-center gap-2 rounded-xl px-3 py-2 text-neutral-400 hover:text-white hover:bg-neutral-900/50 transition-colors font-medium text-xs"
         >
           <PlusCircle className="h-4 w-4 text-neutral-400" />
-          <span>Publish</span>
+          <span>Publish Component</span>
         </Link>
       </div>
     </aside>

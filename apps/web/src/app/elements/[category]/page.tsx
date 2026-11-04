@@ -3,11 +3,12 @@
 import React, { use } from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Component, FolderPlus, ExternalLink } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 import { getCategoryBySlug, ALL_CATEGORIES } from '@/lib/categories';
 
 export default function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+  const registry = useAdminComponents();
   const resolvedParams = use(params);
   const categorySlug = resolvedParams.category;
 

@@ -7,3 +7,4 @@ Floating pill navigation dock with animated emoji links, tooltips, and spring sc
 ```bash
 pnpm add clsx tailwind-merge
 ```
+
