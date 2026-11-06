@@ -29,6 +29,7 @@ import {
 } from '@/lib/admin-store';
 import { ComponentMeta, ComponentStatus, SectionType } from '@/types/registry';
 import { componentDemos } from '@/registry';
+import { DirectMediaUpload } from '@/components/admin/direct-media-upload';
 
 export default function AdminComponentsPage() {
   const components = useAdminComponents();
@@ -703,33 +704,22 @@ export default function AdminComponentsPage() {
                 </p>
               </div>
 
-              {/* Image & Video Preview Slots */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="font-semibold text-neutral-300">Image Preview Slot URL</label>
-                  <input
-                    type="url"
-                    value={formData.imageUrl}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, imageUrl: e.target.value }))
-                    }
-                    placeholder="https://.../preview.jpg"
-                    className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <label className="font-semibold text-neutral-300">Video Preview Slot URL</label>
-                  <input
-                    type="url"
-                    value={formData.videoUrl}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, videoUrl: e.target.value }))
-                    }
-                    placeholder="https://.../preview.mp4"
-                    className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-2 text-white outline-none focus:border-emerald-500 font-mono text-[11px]"
-                  />
-                </div>
+              {/* Direct Media Slots: Images & Videos from Local Disk */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 rounded-xl border border-neutral-800/80 bg-neutral-900/30 p-3">
+                <DirectMediaUpload
+                  label="Image Preview Slot"
+                  type="image"
+                  value={formData.imageUrl}
+                  onChange={(url) => setFormData((prev) => ({ ...prev, imageUrl: url }))}
+                  helperText="Upload PNG, JPG, or WebP screenshot directly from your computer."
+                />
+                <DirectMediaUpload
+                  label="Video Preview Slot"
+                  type="video"
+                  value={formData.videoUrl}
+                  onChange={(url) => setFormData((prev) => ({ ...prev, videoUrl: url }))}
+                  helperText="Upload MP4 or WebM motion video clip directly from your computer."
+                />
               </div>
 
               {/* Component Source Code */}

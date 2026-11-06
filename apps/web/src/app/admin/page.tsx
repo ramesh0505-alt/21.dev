@@ -16,7 +16,11 @@ import {
   Check,
   Search,
   CheckCircle2,
+  UploadCloud,
+  Image as ImageIcon,
+  Film,
 } from 'lucide-react';
+import { DirectMediaUpload } from '@/components/admin/direct-media-upload';
 import {
   useAdminComponents,
   useAdminIcons,
@@ -35,6 +39,8 @@ export default function AdminOverviewPage() {
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [componentToDelete, setComponentToDelete] = useState<string | null>(null);
   const [iconToDelete, setIconToDelete] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string>('');
+  const [uploadedVideo, setUploadedVideo] = useState<string>('');
 
   const customComponents = getCustomComponents();
   const deletedSlugs = getDeletedComponentSlugs();
@@ -164,6 +170,46 @@ export default function AdminOverviewPage() {
             <div className="text-[11px] text-neutral-400 mt-1">
               Synced with client event bus
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 2.5 Direct Media Studio: Local Disk Uploads */}
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <h2 className="text-base font-bold text-white flex items-center gap-2">
+              <UploadCloud className="h-4 w-4 text-emerald-400" />
+              <span>Direct Media Studio (Disk Upload)</span>
+            </h2>
+            <span className="rounded-md bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-mono text-emerald-400">
+              Direct Files, No Web Links Needed
+            </span>
+          </div>
+          <span className="text-[11px] text-neutral-500 font-mono">
+            Directly saved to: public/uploads/
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-4 space-y-3">
+            <DirectMediaUpload
+              label="Direct Image Upload (from disk)"
+              type="image"
+              value={uploadedImage}
+              onChange={(url) => setUploadedImage(url)}
+              helperText="Upload any PNG, JPG, or WebP screenshot directly from your computer."
+            />
+          </div>
+
+          <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-4 space-y-3">
+            <DirectMediaUpload
+              label="Direct Video Upload (from disk)"
+              type="video"
+              value={uploadedVideo}
+              onChange={(url) => setUploadedVideo(url)}
+              helperText="Upload any MP4, WebM, or MOV motion video directly from your computer."
+            />
           </div>
         </div>
       </div>
