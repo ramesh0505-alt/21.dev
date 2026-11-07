@@ -8,8 +8,12 @@
       "id": "test-cat",
       "name": "Test Category",
       "slug": "test-category",
-      "createdAt": "2026-11-07T05:17:08.578Z"
+      "createdAt": "2026-11-07T07:08:14.518Z"
     }
   ],
-  "updatedAt": "2026-11-07T05:17:08.580Z"
+  "customSections": [],
+  "customTemplates": [],
+  "customThemes": [],
+  "activityLog": [],
+  "updatedAt": "2026-11-07T07:08:14.520Z"
 }

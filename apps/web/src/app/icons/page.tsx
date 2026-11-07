@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { AppHeader } from '@/components/layout/app-header';
-import { AppSidebar } from '@/components/layout/app-sidebar';
 import { Sparkles, Search, Copy, Check, Sliders, Code2, PlusCircle, ExternalLink } from 'lucide-react';
 import { useAdminIcons, AdminIcon } from '@/lib/admin-store';
 import Link from 'next/link';
@@ -57,13 +55,8 @@ export default function IconsCatalogPage() {
   };
 
   return (
-    <div className="flex h-screen bg-[#0B0F19] text-slate-100 overflow-hidden font-sans">
-      <AppSidebar />
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        <AppHeader />
-
-        <main className="p-8 max-w-7xl mx-auto w-full space-y-8">
-          {/* Header */}
+    <div className="max-w-7xl mx-auto w-full space-y-8 pb-12">
+      {/* Header */}
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
             <div>
               <div className="flex items-center gap-3 mb-2">
@@ -262,8 +255,6 @@ export default function IconsCatalogPage() {
               </div>
             )}
           </div>
-        </main>
-      </div>
     </div>
   );
 }

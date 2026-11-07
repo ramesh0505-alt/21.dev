@@ -1,0 +1,19 @@
+{
+  "customComponents": [],
+  "deletedComponents": [],
+  "customIcons": [],
+  "deletedIcons": [],
+  "customCategories": [
+    {
+      "id": "test-cat",
+      "name": "Test Category",
+      "slug": "test-category",
+      "createdAt": "2026-11-07T07:08:14.518Z"
+    }
+  ],
+  "customSections": [],
+  "customTemplates": [],
+  "customThemes": [],
+  "activityLog": [],
+  "updatedAt": "2026-11-07T07:08:14.520Z"
+}

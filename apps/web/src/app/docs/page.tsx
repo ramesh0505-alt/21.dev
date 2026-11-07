@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { AppHeader } from '@/components/layout/app-header';
-import { AppSidebar } from '@/components/layout/app-sidebar';
 import { BookOpen, Terminal, Layers, RefreshCw, Upload, ShieldCheck, ChevronRight, Copy, Check } from 'lucide-react';
 import Link from 'next/link';
 
@@ -182,13 +180,8 @@ export default function DocsPage() {
   };
 
   return (
-    <div className="flex h-screen bg-[#0B0F19] text-slate-100 overflow-hidden font-sans">
-      <AppSidebar />
-      <div className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        <AppHeader />
-
-        <main className="p-8 max-w-7xl mx-auto w-full space-y-8">
-          {/* Header */}
+    <div className="max-w-7xl mx-auto w-full space-y-8 pb-12">
+      {/* Header */}
           <div className="border-b border-slate-800/80 pb-6">
             <div className="flex items-center gap-3 mb-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
@@ -281,8 +274,6 @@ export default function DocsPage() {
               </div>
             </div>
           </div>
-        </main>
-      </div>
     </div>
   );
 }
