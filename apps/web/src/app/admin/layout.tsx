@@ -12,6 +12,10 @@ import {
   ArrowLeft,
   ShieldCheck,
   ExternalLink,
+  LayoutTemplate,
+  AppWindow,
+  Palette,
+  History,
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -23,9 +27,13 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
 
   const navItems = [
     { name: 'Overview', href: '/admin', icon: LayoutDashboard },
-    { name: 'UI Components', href: '/admin/components', icon: Layers },
+    { name: 'Components', href: '/admin/components', icon: Layers },
+    { name: 'Sections', href: '/admin/sections', icon: LayoutTemplate },
+    { name: 'Templates', href: '/admin/templates', icon: AppWindow },
+    { name: 'Themes', href: '/admin/themes', icon: Palette },
     { name: 'Icon Studio', href: '/admin/icons', icon: Sparkles },
     { name: 'Categories', href: '/admin/categories', icon: FolderTree },
+    { name: 'Activity Log', href: '/admin/activity', icon: History },
     { name: 'Backup & Export', href: '/admin/export', icon: DownloadCloud },
   ];
 

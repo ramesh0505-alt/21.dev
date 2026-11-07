@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Clock, Trash2, ArrowRight } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 import { getRecentlyViewed } from '@/lib/storage';
 
 export default function RecentPage() {
+  const registry = useAdminComponents();
   const [recentSlugs, setRecentSlugs] = useState<string[]>([]);
 
   useEffect(() => {

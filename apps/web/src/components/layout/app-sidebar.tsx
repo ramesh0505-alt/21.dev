@@ -19,6 +19,9 @@ import {
   ChevronDown,
   Search,
   Layers,
+  Box,
+  BookOpen,
+  Package,
 } from 'lucide-react';
 import { registry } from '@/registry';
 
@@ -139,8 +142,12 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
 
           {/* Themes */}
           <Link
-            href="/elements"
-            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+            href="/themes"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/themes'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
           >
             <div className="flex items-center gap-2.5">
               <Palette className="h-4 w-4 text-neutral-400" />
@@ -149,10 +156,46 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
             <ChevronRight className="h-3.5 w-3.5 text-neutral-500" />
           </Link>
 
+          {/* 3D Primitives */}
+          <Link
+            href="/3d"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/3d'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Box className="h-4 w-4 text-neutral-400" />
+              <span>3D Components</span>
+            </div>
+            <ChevronRight className="h-3.5 w-3.5 text-neutral-500" />
+          </Link>
+
+          {/* Effects & Backgrounds */}
+          <Link
+            href="/effects"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/effects'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="h-4 w-4 text-neutral-400" />
+              <span>Backgrounds & Effects</span>
+            </div>
+            <ChevronRight className="h-3.5 w-3.5 text-neutral-500" />
+          </Link>
+
           {/* Templates */}
           <Link
             href="/templates"
-            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/templates'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
           >
             <div className="flex items-center gap-2.5">
               <LayoutTemplate className="h-4 w-4 text-neutral-400" />
@@ -161,25 +204,29 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
             <ChevronRight className="h-3.5 w-3.5 text-neutral-500" />
           </Link>
 
-          {/* Apps [New] */}
+          {/* Apps */}
           <Link
             href="/product-kits"
-            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/product-kits'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
           >
             <div className="flex items-center gap-2.5">
               <AppWindow className="h-4 w-4 text-neutral-400" />
               <span>Apps</span>
             </div>
-            <span className="rounded bg-sky-500/20 text-sky-400 px-1.5 py-0.2 text-[9px] font-bold">
-              New
+            <span className="rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.2 text-[9px] font-mono">
+              Ready
             </span>
           </Link>
 
-          {/* Icons [New] */}
+          {/* Icons */}
           <Link
-            href="/admin/icons"
+            href="/icons"
             className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
-              pathname === '/admin/icons'
+              pathname === '/icons'
                 ? 'bg-neutral-900 text-white font-semibold'
                 : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
             }`}
@@ -188,23 +235,24 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
               <Sparkles className="h-4 w-4 text-neutral-400" />
               <span>Icons</span>
             </div>
-            <span className="rounded bg-sky-500/20 text-sky-400 px-1.5 py-0.2 text-[9px] font-bold">
-              New
+            <span className="rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.2 text-[9px] font-mono">
+              Vector
             </span>
           </Link>
 
-          {/* Video [New] */}
+          {/* Animations */}
           <Link
             href="/animations"
-            className="flex items-center justify-between rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+            className={`flex items-center justify-between rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/animations'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
           >
             <div className="flex items-center gap-2.5">
               <Video className="h-4 w-4 text-neutral-400" />
-              <span>Video</span>
+              <span>Animations</span>
             </div>
-            <span className="rounded bg-sky-500/20 text-sky-400 px-1.5 py-0.2 text-[9px] font-bold">
-              New
-            </span>
           </Link>
 
           {/* Bookmarks */}
@@ -262,13 +310,43 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
             </span>
           </Link>
 
+          {/* Documentation */}
+          <Link
+            href="/docs"
+            className={`flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/docs'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
+          >
+            <BookOpen className="h-4 w-4 text-neutral-400" />
+            <span>Documentation</span>
+          </Link>
+
+          {/* Dependencies */}
+          <Link
+            href="/dependencies"
+            className={`flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/dependencies'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
+          >
+            <Package className="h-4 w-4 text-neutral-400" />
+            <span>Dependencies</span>
+          </Link>
+
           {/* CLI & MCP */}
           <Link
             href="/settings"
-            className="flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 transition-colors"
+            className={`flex items-center gap-2.5 rounded-xl px-3 py-2 font-medium transition-colors ${
+              pathname === '/settings'
+                ? 'bg-neutral-900 text-white font-semibold'
+                : 'text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200'
+            }`}
           >
             <Terminal className="h-4 w-4 text-neutral-400" />
-            <span>CLI & MCP</span>
+            <span>CLI & Settings</span>
           </Link>
 
           {/* Admin Studio */}
@@ -284,7 +362,7 @@ export function AppSidebar({ onOpenSearch }: AppSidebarProps) {
               <Layers className="h-4 w-4 text-emerald-400" />
               <span>Admin Studio</span>
             </div>
-            <span className="rounded bg-emerald-500/20 text-emerald-400 px-1.5 py-0.2 text-[9px] font-bold">
+            <span className="rounded bg-emerald-500/20 text-emerald-400 px-1.5 py-0.2 text-[9px] font-mono">
               Admin
             </span>
           </Link>

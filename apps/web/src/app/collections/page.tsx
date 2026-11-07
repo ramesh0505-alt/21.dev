@@ -14,11 +14,12 @@ import {
   Check,
   X,
 } from 'lucide-react';
-import { registry } from '@/registry';
+import { useAdminComponents } from '@/lib/admin-store';
 import { ComponentCard } from '@/components/preview/component-card';
 import { getCollections, createCollection, UserCollection, getRemixes, deleteRemix, RemixedComponent } from '@/lib/storage';
 
 export default function CollectionsPage() {
+  const registry = useAdminComponents();
   const [collections, setCollections] = useState<UserCollection[]>([]);
   const [remixes, setRemixes] = useState<RemixedComponent[]>([]);
   const [isCreating, setIsCreating] = useState(false);
@@ -57,11 +58,11 @@ export default function CollectionsPage() {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-neutral-800 pb-6">
         <div>
-          <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-0.5 text-xs font-medium text-blue-400 mb-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-0.5 text-xs font-medium text-emerald-400 mb-2">
             <FolderGit2 className="h-3.5 w-3.5" />
             <span>Workspace Collections</span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">Collections & Custom Remixes</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-white font-serif">Collections & Custom Remixes</h1>
           <p className="text-sm text-neutral-400 mt-1 max-w-2xl">
             Custom component stacks and customized variations preserved locally in your browser storage.
           </p>
@@ -70,7 +71,7 @@ export default function CollectionsPage() {
         <div>
           <button
             onClick={() => setIsCreating(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-semibold text-white hover:bg-blue-500 active:scale-95 transition-all shadow-md shadow-blue-600/30 cursor-pointer"
+            className="inline-flex items-center gap-2 rounded-xl bg-emerald-500 hover:bg-emerald-400 px-4 py-2 text-xs font-semibold text-slate-950 active:scale-95 transition-all shadow-md shadow-emerald-500/20 cursor-pointer"
           >
             <Plus className="h-4 w-4" />
             <span>New Collection</span>

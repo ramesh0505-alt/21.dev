@@ -24,6 +24,7 @@ import { ActionBar } from './action-bar';
 import { isFavorite, toggleFavorite } from '@/lib/storage';
 import { getSimilarComponents } from '@/lib/similar';
 import { getComponentMedia } from '@/lib/media-preview';
+import { SafePreviewBoundary } from './safe-preview-boundary';
 
 interface ComponentModalProps {
   component: ComponentMeta | null;
@@ -270,9 +271,11 @@ export function ComponentModal({ component, onClose }: ComponentModalProps) {
               {mediaMode === 'live' && (
                 <div className="w-full flex items-center justify-center animate-in fade-in duration-200">
                   {DemoComponent ? (
-                    <div className="w-full flex items-center justify-center">
-                      <DemoComponent />
-                    </div>
+                    <SafePreviewBoundary componentName={currentComp.name}>
+                      <div className="w-full flex items-center justify-center">
+                        <DemoComponent />
+                      </div>
+                    </SafePreviewBoundary>
                   ) : (
                     <div className="text-neutral-500 text-xs font-mono">Live Demo Active</div>
                   )}

@@ -10,12 +10,29 @@ export interface ComponentSourceLocations {
   styles?: string;
 }
 
+export type ComponentType =
+  | 'element'
+  | 'section'
+  | 'template'
+  | 'animation'
+  | 'effect'
+  | '3d'
+  | 'icon';
+
+export interface ResponsiveSupport {
+  mobile: boolean;
+  tablet: boolean;
+  desktop: boolean;
+}
+
 export interface ComponentMetaRaw {
   id: string;
   name: string;
   slug: string;
   category: string;
+  subcategory?: string;
   section: 'elements' | 'navigation' | 'sections' | 'media' | 'animations' | 'data-display' | 'product-kits';
+  type?: ComponentType;
   description: string;
   tags: string[];
   framework: string;
@@ -25,6 +42,11 @@ export interface ComponentMetaRaw {
   status: 'Inbox' | 'Reference' | 'Prototype' | 'Ready' | 'Deprecated';
   previewReference: string;
   sourceFileLocations: ComponentSourceLocations;
+  thumbnail?: string;
+  variants?: string[];
+  responsiveSupport?: ResponsiveSupport;
+  accessibilityStatus?: 'Compliant' | 'Partial' | 'Needs Review';
+  themeCompatibility?: string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -88,8 +110,37 @@ function main() {
         ? readFileSafe(meta.sourceFileLocations.styles)
         : undefined;
 
+      function inferType(category: string, section: string, tags: string[]): ComponentType {
+        const cat = category.toLowerCase();
+        const sec = section.toLowerCase();
+        const tagSet = new Set(tags.map((t) => t.toLowerCase()));
+
+        if (cat.includes('3d') || tagSet.has('3d') || tagSet.has('three') || tagSet.has('webgl')) return '3d';
+        if (cat.includes('animation') || sec === 'animations') return 'animation';
+        if (cat.includes('background') || cat.includes('effect') || tagSet.has('grain') || tagSet.has('mesh')) return 'effect';
+        if (sec === 'sections' || cat.includes('section') || cat.includes('hero') || cat.includes('cta') || cat.includes('faq')) return 'section';
+        if (sec === 'product-kits' || cat.includes('template') || tagSet.has('template')) return 'template';
+        if (cat.includes('icon') || tagSet.has('icon')) return 'icon';
+        return 'element';
+      }
+
+      const inferredType = meta.type || inferType(meta.category, meta.section, meta.tags || []);
+      const subcategory = meta.subcategory || (meta.section === 'elements' ? 'Form & Action' : meta.section === 'sections' ? 'Marketing Layout' : 'Interactive');
+      const thumbnail = meta.thumbnail || `/previews/${meta.slug}.webp`;
+      const variants = meta.variants || ['default', 'outline', 'ghost', 'accent'];
+      const responsiveSupport = meta.responsiveSupport || { mobile: true, tablet: true, desktop: true };
+      const accessibilityStatus = meta.accessibilityStatus || 'Compliant';
+      const themeCompatibility = meta.themeCompatibility || ['dark-navy', 'emerald-accent', 'cyber-slate', 'minimal-monochrome', 'swiss-clean'];
+
       const item: RegistryItem = {
         ...meta,
+        type: inferredType,
+        subcategory,
+        thumbnail,
+        variants,
+        responsiveSupport,
+        accessibilityStatus,
+        themeCompatibility,
         code: {
           component: componentCode,
           demo: demoCode,

@@ -1,5 +1,22 @@
 export type ComponentStatus = 'Inbox' | 'Reference' | 'Prototype' | 'Ready' | 'Deprecated';
 
+export type ComponentType =
+  | 'element'
+  | 'section'
+  | 'template'
+  | 'animation'
+  | 'effect'
+  | '3d'
+  | 'icon';
+
+export type AccessibilityStatus = 'Compliant' | 'Partial' | 'Needs Review';
+
+export interface ResponsiveSupport {
+  mobile: boolean;
+  tablet: boolean;
+  desktop: boolean;
+}
+
 export type SectionType =
   | 'elements'
   | 'navigation'
@@ -51,7 +68,9 @@ export interface ComponentMeta {
   name: string;
   slug: string;
   category: string;
+  subcategory?: string;
   section: SectionType;
+  type?: ComponentType;
   description: string;
   tags: string[];
   framework: string;
@@ -61,6 +80,11 @@ export interface ComponentMeta {
   status: ComponentStatus;
   previewReference: string;
   sourceFileLocations: ComponentSourceFiles;
+  thumbnail?: string;
+  variants?: string[];
+  responsiveSupport?: ResponsiveSupport;
+  accessibilityStatus?: AccessibilityStatus;
+  themeCompatibility?: string[];
   createdAt: string;
   updatedAt: string;
   media?: ComponentMedia;

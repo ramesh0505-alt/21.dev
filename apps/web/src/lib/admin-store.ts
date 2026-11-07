@@ -23,6 +23,54 @@ export interface AdminCategory {
   createdAt: string;
 }
 
+export interface AdminSection {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  category: string;
+  componentSlugs: string[];
+  status: 'draft' | 'published' | 'archived';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AdminTemplate {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  framework: string;
+  pages: string[];
+  componentSlugs: string[];
+  status: 'draft' | 'published' | 'archived';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AdminTheme {
+  id: string;
+  name: string;
+  slug: string;
+  description: string;
+  bg: string;
+  surface: string;
+  border: string;
+  accent: string;
+  status: 'draft' | 'published' | 'archived';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AdminActivity {
+  id: string;
+  timestamp: string;
+  action: 'create' | 'update' | 'delete' | 'sync' | 'export';
+  resourceType: 'component' | 'section' | 'template' | 'theme' | 'icon' | 'category';
+  resourceName: string;
+  details?: string;
+}
+
 export interface AdminBackupData {
   version: string;
   exportedAt: string;
@@ -31,6 +79,10 @@ export interface AdminBackupData {
   customIcons: AdminIcon[];
   deletedIcons: string[];
   customCategories: AdminCategory[];
+  customSections?: AdminSection[];
+  customTemplates?: AdminTemplate[];
+  customThemes?: AdminTheme[];
+  activityLog?: AdminActivity[];
 }
 
 const CUSTOM_COMPONENTS_KEY = 'devui_custom_components';
@@ -38,6 +90,10 @@ const DELETED_COMPONENTS_KEY = 'devui_deleted_components';
 const CUSTOM_ICONS_KEY = 'devui_custom_icons';
 const DELETED_ICONS_KEY = 'devui_deleted_icons';
 const CUSTOM_CATEGORIES_KEY = 'devui_custom_categories';
+const CUSTOM_SECTIONS_KEY = 'devui_custom_sections';
+const CUSTOM_TEMPLATES_KEY = 'devui_custom_templates';
+const CUSTOM_THEMES_KEY = 'devui_custom_themes';
+const ACTIVITY_LOG_KEY = 'devui_activity_log';
 
 // Built-in starter icons
 export const DEFAULT_ICONS: AdminIcon[] = [
@@ -285,8 +341,18 @@ export function saveAdminComponent(component: ComponentMeta): void {
   if (existsIdx >= 0) {
     updatedCustom = [...custom];
     updatedCustom[existsIdx] = component;
+    logAdminActivity({
+      action: 'update',
+      resourceType: 'component',
+      resourceName: component.name,
+    });
   } else {
     updatedCustom = [component, ...custom];
+    logAdminActivity({
+      action: 'create',
+      resourceType: 'component',
+      resourceName: component.name,
+    });
   }
 
   safeSet(CUSTOM_COMPONENTS_KEY, JSON.stringify(updatedCustom));
@@ -304,6 +370,12 @@ export function deleteAdminComponent(slug: string): void {
   if (!deleted.includes(slug)) {
     safeSet(DELETED_COMPONENTS_KEY, JSON.stringify([...deleted, slug]));
   }
+
+  logAdminActivity({
+    action: 'delete',
+    resourceType: 'component',
+    resourceName: slug,
+  });
 }
 
 export function resetAllComponents(): void {
@@ -438,6 +510,10 @@ export function exportAllAdminData(): AdminBackupData {
       }
     })(),
     customCategories: getAdminCategories(),
+    customSections: getAdminSections(),
+    customTemplates: getAdminTemplates(),
+    customThemes: getAdminThemes(),
+    activityLog: getAdminActivityLog(),
   };
 }
 
@@ -459,6 +535,23 @@ export function importAdminData(data: AdminBackupData): boolean {
     if (Array.isArray(data.customCategories)) {
       safeSet(CUSTOM_CATEGORIES_KEY, JSON.stringify(data.customCategories));
     }
+    if (Array.isArray(data.customSections)) {
+      safeSet(CUSTOM_SECTIONS_KEY, JSON.stringify(data.customSections));
+    }
+    if (Array.isArray(data.customTemplates)) {
+      safeSet(CUSTOM_TEMPLATES_KEY, JSON.stringify(data.customTemplates));
+    }
+    if (Array.isArray(data.customThemes)) {
+      safeSet(CUSTOM_THEMES_KEY, JSON.stringify(data.customThemes));
+    }
+    if (Array.isArray(data.activityLog)) {
+      safeSet(ACTIVITY_LOG_KEY, JSON.stringify(data.activityLog));
+    }
+    logAdminActivity({
+      action: 'sync',
+      resourceType: 'component',
+      resourceName: 'Full Library Backup Restored',
+    });
     return true;
   } catch {
     return false;
@@ -535,6 +628,406 @@ export function useAdminCategories(): AdminCategory[] {
   }, []);
 
   return categories;
+}
+
+// ======================== SECTION MANAGEMENT ========================
+
+export const DEFAULT_SECTIONS: AdminSection[] = [
+  {
+    id: 'sec-hero-geometric',
+    name: 'Hero Geometric Suite',
+    slug: 'hero-geometric-suite',
+    description: 'High-conversion hero header with floating geometric wireframe shapes and animated CTA.',
+    category: 'Hero',
+    componentSlugs: ['hero-geometric', 'animated-button', 'status-badge'],
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+  {
+    id: 'sec-feature-bento',
+    name: 'Feature Bento Showcase',
+    slug: 'feature-bento-showcase',
+    description: 'High-density grid layout demonstrating multi-scale product features with spotlight cards.',
+    category: 'Features',
+    componentSlugs: ['bento-grid', 'spotlight-card', 'tilt-card'],
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+  {
+    id: 'sec-social-proof',
+    name: 'Social Proof Stack',
+    slug: 'social-proof-stack',
+    description: 'Interactive client review cards and real-time metric counter banner.',
+    category: 'Testimonials',
+    componentSlugs: ['animated-testimonials', 'stats-card'],
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+];
+
+export function getAdminSections(): AdminSection[] {
+  try {
+    const raw = safeGet(CUSTOM_SECTIONS_KEY);
+    if (!raw) return DEFAULT_SECTIONS;
+    return JSON.parse(raw);
+  } catch {
+    return DEFAULT_SECTIONS;
+  }
+}
+
+export function saveAdminSection(section: AdminSection): void {
+  try {
+    const current = getAdminSections();
+    const idx = current.findIndex((s) => s.id === section.id || s.slug === section.slug);
+    let updated: AdminSection[];
+    if (idx >= 0) {
+      updated = [...current];
+      updated[idx] = { ...section, updatedAt: new Date().toISOString() };
+      logAdminActivity({
+        action: 'update',
+        resourceType: 'section',
+        resourceName: section.name,
+      });
+    } else {
+      updated = [section, ...current];
+      logAdminActivity({
+        action: 'create',
+        resourceType: 'section',
+        resourceName: section.name,
+      });
+    }
+    safeSet(CUSTOM_SECTIONS_KEY, JSON.stringify(updated));
+  } catch {}
+}
+
+export function deleteAdminSection(id: string): void {
+  try {
+    const current = getAdminSections();
+    const target = current.find((s) => s.id === id);
+    const updated = current.filter((s) => s.id !== id);
+    safeSet(CUSTOM_SECTIONS_KEY, JSON.stringify(updated));
+    if (target) {
+      logAdminActivity({
+        action: 'delete',
+        resourceType: 'section',
+        resourceName: target.name,
+      });
+    }
+  } catch {}
+}
+
+// ======================== TEMPLATE MANAGEMENT ========================
+
+export const DEFAULT_TEMPLATES: AdminTemplate[] = [
+  {
+    id: 'tpl-saas-landing',
+    name: 'Modern SaaS Developer Landing',
+    slug: 'saas-developer-landing',
+    description: 'Complete high-performance marketing landing page with hero, interactive bento grid, testimonials, and terminal.',
+    framework: 'Next.js 15 + React 19',
+    pages: ['Landing', 'Features', 'Pricing'],
+    componentSlugs: ['hero-geometric', 'bento-grid', 'stats-card', 'animated-testimonials', 'terminal-window'],
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+  {
+    id: 'tpl-commerce-storefront',
+    name: 'Curated Commerce Showcase',
+    slug: 'commerce-showcase',
+    description: 'Minimalist product discovery experience featuring 3D rail and coverflow galleries.',
+    framework: 'Next.js 15 + React 19',
+    pages: ['Storefront', 'Product Details'],
+    componentSlugs: ['clothing-rail', 'coverflow-carousel', 'card-stack'],
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+];
+
+export function getAdminTemplates(): AdminTemplate[] {
+  try {
+    const raw = safeGet(CUSTOM_TEMPLATES_KEY);
+    if (!raw) return DEFAULT_TEMPLATES;
+    return JSON.parse(raw);
+  } catch {
+    return DEFAULT_TEMPLATES;
+  }
+}
+
+export function saveAdminTemplate(template: AdminTemplate): void {
+  try {
+    const current = getAdminTemplates();
+    const idx = current.findIndex((t) => t.id === template.id || t.slug === template.slug);
+    let updated: AdminTemplate[];
+    if (idx >= 0) {
+      updated = [...current];
+      updated[idx] = { ...template, updatedAt: new Date().toISOString() };
+      logAdminActivity({
+        action: 'update',
+        resourceType: 'template',
+        resourceName: template.name,
+      });
+    } else {
+      updated = [template, ...current];
+      logAdminActivity({
+        action: 'create',
+        resourceType: 'template',
+        resourceName: template.name,
+      });
+    }
+    safeSet(CUSTOM_TEMPLATES_KEY, JSON.stringify(updated));
+  } catch {}
+}
+
+export function deleteAdminTemplate(id: string): void {
+  try {
+    const current = getAdminTemplates();
+    const target = current.find((t) => t.id === id);
+    const updated = current.filter((t) => t.id !== id);
+    safeSet(CUSTOM_TEMPLATES_KEY, JSON.stringify(updated));
+    if (target) {
+      logAdminActivity({
+        action: 'delete',
+        resourceType: 'template',
+        resourceName: target.name,
+      });
+    }
+  } catch {}
+}
+
+// ======================== THEME MANAGEMENT ========================
+
+export const DEFAULT_THEMES: AdminTheme[] = [
+  {
+    id: 'thm-deep-navy',
+    name: 'Deep Navy (Default)',
+    slug: 'deep-navy',
+    description: 'Obsidian navy developer interface with emerald phosphor accents.',
+    bg: '#0B0F19',
+    surface: '#111827',
+    border: '#1E293B',
+    accent: '#10B981',
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+  {
+    id: 'thm-cyber-emerald',
+    name: 'Cyber Emerald',
+    slug: 'cyber-emerald',
+    description: 'High-contrast nocturnal forest theme with deep spruce slate.',
+    bg: '#061412',
+    surface: '#0B221F',
+    border: '#16433C',
+    accent: '#10B981',
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+  {
+    id: 'thm-charcoal-slate',
+    name: 'Charcoal Slate',
+    slug: 'charcoal-slate',
+    description: 'Technical Swiss modernist darkroom with neutral graphite and sky blue.',
+    bg: '#0F172A',
+    surface: '#1E293B',
+    border: '#334155',
+    accent: '#38BDF8',
+    status: 'published',
+    createdAt: '2026-11-04T12:00:00Z',
+    updatedAt: '2026-11-04T12:00:00Z',
+  },
+];
+
+export function getAdminThemes(): AdminTheme[] {
+  try {
+    const raw = safeGet(CUSTOM_THEMES_KEY);
+    if (!raw) return DEFAULT_THEMES;
+    return JSON.parse(raw);
+  } catch {
+    return DEFAULT_THEMES;
+  }
+}
+
+export function saveAdminTheme(theme: AdminTheme): void {
+  try {
+    const current = getAdminThemes();
+    const idx = current.findIndex((t) => t.id === theme.id || t.slug === theme.slug);
+    let updated: AdminTheme[];
+    if (idx >= 0) {
+      updated = [...current];
+      updated[idx] = { ...theme, updatedAt: new Date().toISOString() };
+      logAdminActivity({
+        action: 'update',
+        resourceType: 'theme',
+        resourceName: theme.name,
+      });
+    } else {
+      updated = [theme, ...current];
+      logAdminActivity({
+        action: 'create',
+        resourceType: 'theme',
+        resourceName: theme.name,
+      });
+    }
+    safeSet(CUSTOM_THEMES_KEY, JSON.stringify(updated));
+  } catch {}
+}
+
+export function deleteAdminTheme(id: string): void {
+  try {
+    const current = getAdminThemes();
+    const target = current.find((t) => t.id === id);
+    const updated = current.filter((t) => t.id !== id);
+    safeSet(CUSTOM_THEMES_KEY, JSON.stringify(updated));
+    if (target) {
+      logAdminActivity({
+        action: 'delete',
+        resourceType: 'theme',
+        resourceName: target.name,
+      });
+    }
+  } catch {}
+}
+
+// ======================== ACTIVITY LOGGING ========================
+
+export function logAdminActivity(entry: {
+  action: 'create' | 'update' | 'delete' | 'sync' | 'export';
+  resourceType: 'component' | 'section' | 'template' | 'theme' | 'icon' | 'category';
+  resourceName: string;
+  details?: string;
+}): void {
+  try {
+    const raw = safeGet(ACTIVITY_LOG_KEY);
+    const existing: AdminActivity[] = raw ? JSON.parse(raw) : [];
+    const newActivity: AdminActivity = {
+      id: 'act-' + Date.now() + '-' + Math.random().toString(36).substring(2, 7),
+      timestamp: new Date().toISOString(),
+      ...entry,
+    };
+    const updated = [newActivity, ...existing].slice(0, 100);
+    safeSet(ACTIVITY_LOG_KEY, JSON.stringify(updated));
+  } catch {}
+}
+
+export function getAdminActivityLog(): AdminActivity[] {
+  try {
+    const raw = safeGet(ACTIVITY_LOG_KEY);
+    if (!raw) {
+      return [
+        {
+          id: 'act-init-1',
+          timestamp: new Date(Date.now() - 3600000).toISOString(),
+          action: 'sync',
+          resourceType: 'component',
+          resourceName: '28 Components Discovered',
+          details: 'Initialized monorepo component registry from packages/ui/src',
+        },
+      ];
+    }
+    return JSON.parse(raw);
+  } catch {
+    return [];
+  }
+}
+
+// ======================== HOOKS EXTENSIONS ========================
+
+export function useAdminSections(): AdminSection[] {
+  const [sections, setSections] = useState<AdminSection[]>(DEFAULT_SECTIONS);
+
+  useEffect(() => {
+    const update = () => {
+      setSections(getAdminSections());
+    };
+    update();
+
+    window.addEventListener('devui_admin_updated', update);
+    window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
+    return () => {
+      window.removeEventListener('devui_admin_updated', update);
+      window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
+    };
+  }, []);
+
+  return sections;
+}
+
+export function useAdminTemplates(): AdminTemplate[] {
+  const [templates, setTemplates] = useState<AdminTemplate[]>(DEFAULT_TEMPLATES);
+
+  useEffect(() => {
+    const update = () => {
+      setTemplates(getAdminTemplates());
+    };
+    update();
+
+    window.addEventListener('devui_admin_updated', update);
+    window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
+    return () => {
+      window.removeEventListener('devui_admin_updated', update);
+      window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
+    };
+  }, []);
+
+  return templates;
+}
+
+export function useAdminThemes(): AdminTheme[] {
+  const [themes, setThemes] = useState<AdminTheme[]>(DEFAULT_THEMES);
+
+  useEffect(() => {
+    const update = () => {
+      setThemes(getAdminThemes());
+    };
+    update();
+
+    window.addEventListener('devui_admin_updated', update);
+    window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
+    return () => {
+      window.removeEventListener('devui_admin_updated', update);
+      window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
+    };
+  }, []);
+
+  return themes;
+}
+
+export function useAdminActivityLog(): AdminActivity[] {
+  const [activities, setActivities] = useState<AdminActivity[]>([]);
+
+  useEffect(() => {
+    const update = () => {
+      setActivities(getAdminActivityLog());
+    };
+    update();
+
+    window.addEventListener('devui_admin_updated', update);
+    window.addEventListener('devui_storage_updated', update);
+    window.addEventListener('storage', update);
+
+    return () => {
+      window.removeEventListener('devui_admin_updated', update);
+      window.removeEventListener('devui_storage_updated', update);
+      window.removeEventListener('storage', update);
+    };
+  }, []);
+
+  return activities;
 }
 
 export function useAdminRealtimeStatus(): {

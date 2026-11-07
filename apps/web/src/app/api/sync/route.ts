@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
     };
 
     fs.writeFileSync(SYNC_FILE_PATH, JSON.stringify(updated, null, 2), 'utf-8');
-    return NextResponse.json({ success: true, updatedAt: updated.updatedAt });
+    return NextResponse.json({ success: true, updatedAt: updated.updatedAt, data: updated });
   } catch (err: any) {
     return NextResponse.json(
       { error: 'Failed to write sync file', details: err?.message },

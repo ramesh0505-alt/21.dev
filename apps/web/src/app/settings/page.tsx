@@ -29,6 +29,7 @@ export default function SettingsPage() {
   const [favCount, setFavCount] = useState(0);
   const [colCount, setColCount] = useState(0);
   const [recentCount, setRecentCount] = useState(0);
+  const [storageBytes, setStorageBytes] = useState(0);
   const [copiedGit, setCopiedGit] = useState(false);
 
   useEffect(() => {
@@ -36,6 +37,18 @@ export default function SettingsPage() {
     setFavCount(getFavorites().length);
     setColCount(getCollections().length);
     setRecentCount(getRecentlyViewed().length);
+
+    try {
+      let bytes = 0;
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith('devui_')) {
+          const val = localStorage.getItem(k) || '';
+          bytes += (k.length + val.length) * 2;
+        }
+      }
+      setStorageBytes(bytes);
+    } catch {}
   }, []);
 
   const handlePmChange = (newPm: PackageManager) => {
@@ -148,6 +161,22 @@ git push -u origin main`;
           <div className="rounded-xl border border-slate-800 bg-slate-950 p-3.5 space-y-1">
             <span className="text-[11px] text-slate-500 font-mono">Registry Script</span>
             <div className="text-xs font-mono text-emerald-400">scripts/generate-registry.ts</div>
+          </div>
+        </div>
+
+        {/* Storage Telemetry Meter */}
+        <div className="pt-2 border-t border-slate-800/80">
+          <div className="flex items-center justify-between text-xs mb-2">
+            <span className="text-slate-400 font-medium">Browser Cache Payload Size:</span>
+            <span className="font-mono text-emerald-400">
+              {(storageBytes / 1024).toFixed(2)} KB / 5120 KB ({( (storageBytes / (5120 * 1024)) * 100 ).toFixed(3)}%)
+            </span>
+          </div>
+          <div className="h-2 w-full rounded-full bg-slate-950 border border-slate-800 overflow-hidden">
+            <div
+              className="h-full bg-emerald-500 transition-all duration-500"
+              style={{ width: `${Math.max(2, (storageBytes / (5120 * 1024)) * 100)}%` }}
+            />
           </div>
         </div>
       </section>

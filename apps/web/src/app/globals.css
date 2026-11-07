@@ -4,63 +4,65 @@
 
 @layer base {
   :root {
-    --background: #f8fafc;
-    --foreground: #09090b;
+    --background: #ffffff;
+    --foreground: #090d16;
 
-    --card: #ffffff;
-    --card-foreground: #09090b;
+    --card: #f8fafc;
+    --card-foreground: #090d16;
 
     --popover: #ffffff;
-    --popover-foreground: #09090b;
+    --popover-foreground: #090d16;
 
-    --primary: #09090b;
-    --primary-foreground: #f8fafc;
+    --primary: #090d16;
+    --primary-foreground: #ffffff;
 
-    --secondary: #f4f4f5;
-    --secondary-foreground: #18181b;
+    --secondary: #f1f5f9;
+    --secondary-foreground: #0f172a;
 
-    --muted: #f4f4f5;
-    --muted-foreground: #71717a;
+    --muted: #f1f5f9;
+    --muted-foreground: #64748b;
 
-    --accent: #2563eb;
+    --accent: #10b981;
     --accent-foreground: #ffffff;
 
-    --border: #e4e4e7;
-    --input: #e4e4e7;
-    --ring: #2563eb;
+    --border: #e2e8f0;
+    --input: #e2e8f0;
+    --ring: #10b981;
   }
 
   .dark {
-    --background: #09090b;
-    --foreground: #fafafa;
+    /* Deep Navy & Charcoal surfaces */
+    --background: #0b0f19;
+    --foreground: #f8fafc;
 
-    --card: #121214;
-    --card-foreground: #fafafa;
+    --card: #111827;
+    --card-foreground: #f8fafc;
 
-    --popover: #121214;
-    --popover-foreground: #fafafa;
+    --popover: #111827;
+    --popover-foreground: #f8fafc;
 
-    --primary: #fafafa;
-    --primary-foreground: #09090b;
+    --primary: #10b981;
+    --primary-foreground: #0b0f19;
 
-    --secondary: #18181b;
-    --secondary-foreground: #f4f4f5;
+    --secondary: #1e293b;
+    --secondary-foreground: #f8fafc;
 
-    --muted: #18181b;
-    --muted-foreground: #a1a1aa;
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
 
-    --accent: #3b82f6;
+    /* Emerald Green Accent */
+    --accent: #10b981;
     --accent-foreground: #ffffff;
 
-    --border: #27272a;
-    --input: #27272a;
-    --ring: #3b82f6;
+    --border: #1e293b;
+    --input: #1e293b;
+    --ring: #10b981;
   }
 }
 
 body {
+  background-color: var(--background);
   color: var(--foreground);
-  background: var(--background);
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
@@ -75,10 +77,19 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(161, 161, 170, 0.2);
+  background: #1e293b;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(161, 161, 170, 0.4);
+  background: #334155;
+}
+
+/* Code block typography */
+pre, code, kbd {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+}
+
+.font-serif {
+  font-family: var(--font-serif, 'Instrument Serif', Georgia, serif);
 }

@@ -38,15 +38,30 @@ const config: Config = {
         border: 'var(--border)',
         input: 'var(--input)',
         ring: 'var(--ring)',
+        navy: {
+          700: '#1e293b',
+          800: '#111827',
+          900: '#0b0f19',
+          950: '#070a12',
+        },
         emerald: {
+          50: '#ecfdf5',
+          100: '#d1fae5',
+          200: '#a7f3d0',
+          300: '#6ee7b7',
           400: '#34d399',
           500: '#10b981',
           600: '#059669',
+          700: '#047857',
+          800: '#065f46',
+          900: '#064e3b',
+          950: '#022c22',
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'Fira Code', 'monospace'],
+        serif: ['var(--font-serif)', 'Instrument Serif', 'Georgia', 'serif'],
       },
       borderRadius: {
         lg: '0.625rem',
@@ -59,4 +74,3 @@ const config: Config = {
 };
 
 export default config;
-
