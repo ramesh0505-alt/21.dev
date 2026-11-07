@@ -33,3 +33,4 @@ describe('/api/sync Route Handler', () => {
     expect(data.data.customCategories.some((c: any) => c.id === 'test-cat')).toBe(true);
   });
 });
+
